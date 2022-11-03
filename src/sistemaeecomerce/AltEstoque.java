@@ -46,31 +46,6 @@ public class AltEstoque extends javax.swing.JFrame {
         } catch (Exception e ){
             JOptionPane.showMessageDialog(null, e);
         }
-         String sql2 = "select * from rautor";
-        MySQL factory1 = new MySQL();
-        try (Connection c = factory1.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql2);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             rautor.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
-        }
-        
-        String sql3 = "select * from reditora";
-        MySQL factory2 = new MySQL();
-        try (Connection c = factory2.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql3);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             reditora.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
-        }
     }   
 
     /**
@@ -99,12 +74,14 @@ public class AltEstoque extends javax.swing.JFrame {
         rpreco = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         runi = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        reditora = new javax.swing.JTextPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        rautor = new javax.swing.JTextPane();
         Alteracao = new javax.swing.JButton();
         Deletar = new javax.swing.JButton();
         gen = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        rautor = new javax.swing.JComboBox<>();
-        reditora = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -153,6 +130,10 @@ public class AltEstoque extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(runi);
 
+        jScrollPane4.setViewportView(reditora);
+
+        jScrollPane5.setViewportView(rautor);
+
         Alteracao.setText("Registrar");
         Alteracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,18 +149,6 @@ public class AltEstoque extends javax.swing.JFrame {
         });
 
         jLabel8.setText("Genero");
-
-        rautor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rautorActionPerformed(evt);
-            }
-        });
-
-        reditora.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reditoraActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,15 +178,16 @@ public class AltEstoque extends javax.swing.JFrame {
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel8))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Alteracao)
-                                        .addGap(40, 40, 40)
-                                        .addComponent(Deletar))
-                                    .addComponent(gen, 0, 201, Short.MAX_VALUE)
-                                    .addComponent(rautor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(reditora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(Alteracao)
+                                            .addGap(40, 40, 40)
+                                            .addComponent(Deletar))
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                                        .addComponent(gen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -255,15 +225,15 @@ public class AltEstoque extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(runidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rautor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,14 +272,6 @@ public class AltEstoque extends javax.swing.JFrame {
     private void DeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletarActionPerformed
         Remover();
     }//GEN-LAST:event_DeletarActionPerformed
-
-    private void rautorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rautorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rautorActionPerformed
-
-    private void reditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reditoraActionPerformed
-
-    }//GEN-LAST:event_reditoraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,12 +320,17 @@ public class AltEstoque extends javax.swing.JFrame {
                 rnome.setText(rs.getString(2));
                 rpreco.setText(rs.getString(3));
                 runi.setText(rs.getString(4));
+                reditora.setText(rs.getString(5));
+                rautor.setText(rs.getString(6));
+
             } else {
                 JOptionPane.showMessageDialog(null, "Livro não Cadastrado!!");
                 Idlivro.setText(null);
                 rnome.setText(null);
                 rpreco.setText(null);
                 runi.setText(null);
+                reditora.setText(null);
+                rautor.setText(null);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -387,8 +354,8 @@ public class AltEstoque extends javax.swing.JFrame {
             ps.setString(1, rnome.getText());
             ps.setString(2, rpreco.getText());
             ps.setString(3, runi.getText());
-            ps.setString(4, (String)reditora.getSelectedItem());
-            ps.setString(5, (String) rautor.getSelectedItem());
+            ps.setString(4, reditora.getText());
+            ps.setString(5, rautor.getText());
             ps.setString(7, Idlivro.getText());
             ps.setString(6, (String) gen.getSelectedItem());
             int adicionado = ps.executeUpdate();
@@ -398,8 +365,8 @@ public class AltEstoque extends javax.swing.JFrame {
                 rnome.setText(null);
                 rpreco.setText(null);
                 runi.setText(null);
-                reditora.addItem(null);
-                rautor.addItem(null);
+                reditora.setText(null);
+                rautor.setText(null);
                 gen.addItem(null);
             } 
         } catch (Exception e) {
@@ -423,6 +390,8 @@ public class AltEstoque extends javax.swing.JFrame {
                     rnome.setText(null);
                     rpreco.setText(null);
                     runi.setText(null);
+                    reditora.setText(null);
+                    rautor.setText(null);
                 } else {
                     JOptionPane.showMessageDialog(null, "Erro");
                 }
@@ -450,8 +419,10 @@ public class AltEstoque extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JComboBox<String> rautor;
-    private javax.swing.JComboBox<String> reditora;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTextPane rautor;
+    private javax.swing.JTextPane reditora;
     private javax.swing.JTextPane rnome;
     private javax.swing.JTextField rpreco;
     private javax.swing.JTextPane runi;

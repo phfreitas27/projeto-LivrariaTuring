@@ -164,6 +164,7 @@ public class Loginv2 extends javax.swing.JFrame {
                 System.out.println("Usuario conectado");
                 setVisible(false);
                 Usuario usuario = new Usuario();
+                usuario.setIdUsuario(usuario2.getText());
                 usuario.setLocationRelativeTo(null);
                 usuario.setVisible(true);
             }

@@ -38,8 +38,12 @@ public class Carrinho extends Cliente{
         query.AdicionarCarrinho(this.Id ,IdLivro, IdUsuario);
     }
     
-    public void verDetalhes(){
-        
+    public void RemCarrinho(String IdLivro, String Id) {
+        query.RemoverCarrinho(Id, IdLivro);
+    }
+    
+    public ArrayList<ArrayList<String>> verDetalhes(String Id){
+        return query.MostrarLivrosCarrinho(Id);
     }
     
     public void ProsseguirCompra(){

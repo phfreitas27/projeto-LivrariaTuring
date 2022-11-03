@@ -3,48 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package sistemaeecomerce;
+
 import java.util.ArrayList;
-import java.awt.Color;
-import java.awt.Font;
 import java.util.UUID;
-import javax.swing.table.DefaultTableModel;
 import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Livro;
-import sistemaeecomerce.Classes.Query;
 
 /**
  *
- * @author User
+ * @author thiago.baptista
  */
-public class Usuario extends javax.swing.JFrame {
-   Query query = new Query();
-   String IdUsuario;
-   String IdCarrinho;
+public class CarrinhoTela extends javax.swing.JFrame {
     
-   public void setIdUsuario(String Id) {
-       this.IdUsuario = Id;
-       this.IdCarrinho = UUID.randomUUID().toString();
-   }
-   
-   public void setIdUsuario(String IdUsuario, String Id) {
-       this.IdUsuario = IdUsuario;
-       this.IdCarrinho = Id;
-   }
-   
-   private void addCarrinho(String nome) {
-       Livro l = new Livro();
-       String Id = l.getIdBd(nome);
-       Carrinho c = new Carrinho();
-       c.setId(this.IdCarrinho);
-       c.AddCarrinho(Id, IdUsuario);
-   }
-    /**
-     * Creates new form Usuario
-     */
-    public Usuario() {
-        initComponents();
-        getContentPane().setBackground(Color.white);
-        this.setLocationRelativeTo(null);
+    String IdUsuario;
+    
+    String Id;
+    
+    public void setIdUsuario(String IdUsuario) {
+        this.IdUsuario = IdUsuario;
+    }
+    
+    public void setId(String Id) {
+        this.Id = Id;
         javax.swing.JPanel[] lista = {L1, L2, L3, L4, L5, L6, L7, L8};
         javax.swing.JLabel[] titulos = {TituloL1, TituloL2, TituloL3, TituloL4, TituloL5, TituloL6, TituloL7, TituloL8};
         javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
@@ -52,25 +32,14 @@ public class Usuario extends javax.swing.JFrame {
         javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
         javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
         
-        ArrayList<String> generos2 = new ArrayList();
-        
-        generos2 = query.MostrarGeneros();
-        
-        generos2.add(0, "Todos");
-        
-        for (int i = 0; i < generos2.size(); i++) {
-            gen.addItem(generos2.get(i));
-        }
-        
-        
-        
-        Livro l = new Livro();
+        Carrinho c = new Carrinho();
 
-        ArrayList<ArrayList<String>> arrL = l.mostrarLivros();
+        ArrayList<ArrayList<String>> arrL = c.verDetalhes(Id);
         
         for (int i = 0; i < lista.length; i++) {
             
             if(i < arrL.size()) {
+                
                 String nomes1 = arrL.get(i).get(1);
                 String precos1 = arrL.get(i).get(2);
                 String unidades1 = arrL.get(i).get(3);
@@ -92,7 +61,21 @@ public class Usuario extends javax.swing.JFrame {
                 lista[i].setVisible(false);
             }  
         }
-        
+    }
+    
+    public void remCarrinho(String nome) {
+        Livro l = new Livro();
+        String IdLivro = l.getIdBd(nome);
+        Carrinho c = new Carrinho();
+        c.RemCarrinho(IdLivro, Id);
+        setId(Id);
+    }
+    
+    /**
+     * Creates new form Carrinho
+     */
+    public CarrinhoTela() {
+        initComponents();
     }
 
     /**
@@ -105,6 +88,7 @@ public class Usuario extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         L1 = new javax.swing.JPanel();
         TituloL1 = new javax.swing.JLabel();
@@ -194,18 +178,15 @@ public class Usuario extends javax.swing.JFrame {
         AutorL8 = new javax.swing.JTextField();
         jLabel59 = new javax.swing.JLabel();
         GeneroL8 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        BuscaLivro = new javax.swing.JTextPane();
-        jLabel1 = new javax.swing.JLabel();
-        Pesquisar = new javax.swing.JButton();
-        Titulo = new javax.swing.JLabel();
-        VerCadastro = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        gen = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Voltar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Catálogo"));
         jPanel1.setAutoscrolls(true);
@@ -216,7 +197,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL1.setText("Titulo");
 
-        CarrinhoL1.setText("Adicionar ao Carrinho");
+        CarrinhoL1.setText("Remover");
         CarrinhoL1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL1ActionPerformed(evt);
@@ -304,7 +285,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL2.setText("Titulo");
 
-        CarrinhoL2.setText("Adicionar ao Carrinho");
+        CarrinhoL2.setText("Remover");
         CarrinhoL2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL2ActionPerformed(evt);
@@ -392,7 +373,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL3.setText("Titulo");
 
-        CarrinhoL3.setText("Adicionar ao Carrinho");
+        CarrinhoL3.setText("Remover");
         CarrinhoL3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL3ActionPerformed(evt);
@@ -480,7 +461,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL4.setText("Titulo");
 
-        CarrinhoL4.setText("Adicionar ao Carrinho");
+        CarrinhoL4.setText("Remover");
         CarrinhoL4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL4ActionPerformed(evt);
@@ -568,7 +549,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL5.setText("Titulo");
 
-        CarrinhoL5.setText("Adicionar ao Carrinho");
+        CarrinhoL5.setText("Remover");
         CarrinhoL5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL5ActionPerformed(evt);
@@ -659,7 +640,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL6.setText("Titulo");
 
-        CarrinhoL6.setText("Adicionar ao Carrinho");
+        CarrinhoL6.setText("Remover");
         CarrinhoL6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL6ActionPerformed(evt);
@@ -750,7 +731,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL7.setText("Titulo");
 
-        CarrinhoL7.setText("Adicionar ao Carrinho");
+        CarrinhoL7.setText("Remover");
         CarrinhoL7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL7ActionPerformed(evt);
@@ -841,7 +822,7 @@ public class Usuario extends javax.swing.JFrame {
         TituloL8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL8.setText("Titulo");
 
-        CarrinhoL8.setText("Adicionar ao Carrinho");
+        CarrinhoL8.setText("Remover");
         CarrinhoL8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CarrinhoL8ActionPerformed(evt);
@@ -927,245 +908,76 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         jPanel1.add(L8, gridBagConstraints);
 
-        jButton1.setText("Meu carrinho");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/comprar1.png"))); // NOI18N
-
-        jScrollPane1.setViewportView(BuscaLivro);
-
-        jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
-        jLabel1.setText("Digite qual livro deseja comprar:");
-
-        Pesquisar.setText("Pesquisar");
-        Pesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PesquisarActionPerformed(evt);
-            }
-        });
-
-        Titulo.setFont(new java.awt.Font("Baskerville Old Face", 0, 36)); // NOI18N
-        Titulo.setText("Bem Vindo!");
-
-        VerCadastro.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        VerCadastro.setText("Meu cadastro");
-        VerCadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerCadastroActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/cadastro1.png"))); // NOI18N
-
-        gen.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                genItemStateChanged(evt);
-            }
-        });
-        gen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(389, 389, 389)
-                        .addComponent(Pesquisar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(333, 333, 333)
-                        .addComponent(Titulo)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel2)
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(VerCadastro)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1)))
-                .addGap(98, 98, 98))
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(635, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Titulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(VerCadastro))))
-                .addGap(5, 5, 5)
-                .addComponent(Pesquisar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(491, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(50, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VerCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerCadastroActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         setVisible(false);
-    }//GEN-LAST:event_VerCadastroActionPerformed
-
-    private void PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarActionPerformed
-        
-        Livro l = new Livro();
-
-        ArrayList<ArrayList<String>> arr = l.pesquisarLivros(BuscaLivro.getText());
-        
-        javax.swing.JPanel[] lista = {L1, L2, L3, L4, L5, L6, L7, L8};
-        javax.swing.JLabel[] titulos = {TituloL1, TituloL2, TituloL3, TituloL4, TituloL5, TituloL6, TituloL7, TituloL8};
-        javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
-        javax.swing.JTextField[] editoras = {EditoraL1, EditoraL2, EditoraL3, EditoraL4, EditoraL5, EditoraL6, EditoraL7, EditoraL8};
-        javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
-        javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
-        
-        ArrayList<ArrayList<String>> arrL = l.pesquisarLivros(BuscaLivro.getText());
-        
-        for (int i = 0; i < lista.length; i++) {
-            
-            if(i < arrL.size()) {
-                String nomes1 = arrL.get(i).get(1);
-                String precos1 = arrL.get(i).get(2);
-                String unidades1 = arrL.get(i).get(3);
-                String editoras1 = arrL.get(i).get(4);
-                String autores1 = arrL.get(i).get(5);
-                String generos1 = arrL.get(i).get(6);
-                
-                if(nomes1.length() > 15) {
-                    
-                }
-                
-                titulos[i].setText("<html><p style=\"width:120px\">"+nomes1+"</p></html>");
-                precos[i].setText(precos1);
-                editoras[i].setText(editoras1);
-                autores[i].setText(autores1);
-                generos[i].setText(generos1);
-                
-            } else {
-                lista[i].setVisible(false);
-            }  
-        }
-    }//GEN-LAST:event_PesquisarActionPerformed
+                Usuario usuario = new Usuario();
+                usuario.setIdUsuario(IdUsuario);
+                usuario.setLocationRelativeTo(null);
+                usuario.setVisible(true);
+                usuario.setIdUsuario(IdUsuario, Id);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CarrinhoL1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL1ActionPerformed
-        addCarrinho(TituloL1.getText());
+        remCarrinho(TituloL1.getText());
     }//GEN-LAST:event_CarrinhoL1ActionPerformed
 
     private void CarrinhoL2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL2ActionPerformed
-        addCarrinho(TituloL2.getText());
+        remCarrinho(TituloL2.getText());
     }//GEN-LAST:event_CarrinhoL2ActionPerformed
 
     private void CarrinhoL3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL3ActionPerformed
-        addCarrinho(TituloL3.getText());
+        remCarrinho(TituloL3.getText());
     }//GEN-LAST:event_CarrinhoL3ActionPerformed
 
     private void CarrinhoL4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL4ActionPerformed
-        addCarrinho(TituloL4.getText());
+        remCarrinho(TituloL4.getText());
     }//GEN-LAST:event_CarrinhoL4ActionPerformed
 
     private void CarrinhoL5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL5ActionPerformed
-        addCarrinho(TituloL5.getText());
+        remCarrinho(TituloL5.getText());
     }//GEN-LAST:event_CarrinhoL5ActionPerformed
 
     private void CarrinhoL6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL6ActionPerformed
-        addCarrinho(TituloL6.getText());
+        remCarrinho(TituloL6.getText());
     }//GEN-LAST:event_CarrinhoL6ActionPerformed
 
     private void CarrinhoL7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL7ActionPerformed
-        addCarrinho(TituloL7.getText());
+        remCarrinho(TituloL7.getText());
     }//GEN-LAST:event_CarrinhoL7ActionPerformed
 
     private void CarrinhoL8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL8ActionPerformed
-        addCarrinho(TituloL8.getText());
+        remCarrinho(TituloL8.getText());
     }//GEN-LAST:event_CarrinhoL8ActionPerformed
-
-    private void genActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genActionPerformed
-        
-    }//GEN-LAST:event_genActionPerformed
-
-    private void genItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_genItemStateChanged
-        Livro l = new Livro();
-        
-        javax.swing.JPanel[] lista = {L1, L2, L3, L4, L5, L6, L7, L8};
-        javax.swing.JLabel[] titulos = {TituloL1, TituloL2, TituloL3, TituloL4, TituloL5, TituloL6, TituloL7, TituloL8};
-        javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
-        javax.swing.JTextField[] editoras = {EditoraL1, EditoraL2, EditoraL3, EditoraL4, EditoraL5, EditoraL6, EditoraL7, EditoraL8};
-        javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
-        javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
-        
-        ArrayList<ArrayList<String>> arrL = gen.getSelectedItem().equals("Todos") ? l.mostrarLivros() :  l.pesquisarLivrosGenero((String) gen.getSelectedItem());
-        
-        for (int i = 0; i < lista.length; i++) {
-            
-            if(i < arrL.size()) {
-                lista[i].setVisible(true);
-                String nomes1 = arrL.get(i).get(1);
-                String precos1 = arrL.get(i).get(2);
-                String unidades1 = arrL.get(i).get(3);
-                String editoras1 = arrL.get(i).get(4);
-                String autores1 = arrL.get(i).get(5);
-                String generos1 = arrL.get(i).get(6);
-                
-                if(nomes1.length() > 15) {
-                    
-                }
-                
-                titulos[i].setText("<html><p style=\"width:120px\">"+nomes1+"</p></html>");
-                precos[i].setText(precos1);
-                editoras[i].setText(editoras1);
-                autores[i].setText(autores1);
-                generos[i].setText(generos1);
-                
-            } else {
-                lista[i].setVisible(false);
-            }  
-        }
-    }//GEN-LAST:event_genItemStateChanged
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CarrinhoTela c = new CarrinhoTela();
-        c.setId(IdCarrinho);
-        c.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1184,20 +996,21 @@ public class Usuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CarrinhoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CarrinhoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CarrinhoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CarrinhoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Usuario().setVisible(true);
+                new CarrinhoTela().setVisible(true);
             }
         });
     }
@@ -1211,7 +1024,6 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JTextField AutorL6;
     private javax.swing.JTextField AutorL7;
     private javax.swing.JTextField AutorL8;
-    private javax.swing.JTextPane BuscaLivro;
     private javax.swing.JButton CarrinhoL1;
     private javax.swing.JButton CarrinhoL2;
     private javax.swing.JButton CarrinhoL3;
@@ -1244,7 +1056,6 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JPanel L6;
     private javax.swing.JPanel L7;
     private javax.swing.JPanel L8;
-    private javax.swing.JButton Pesquisar;
     private javax.swing.JTextField PrecoL1;
     private javax.swing.JTextField PrecoL2;
     private javax.swing.JTextField PrecoL3;
@@ -1253,7 +1064,6 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JTextField PrecoL6;
     private javax.swing.JTextField PrecoL7;
     private javax.swing.JTextField PrecoL8;
-    private javax.swing.JLabel Titulo;
     private javax.swing.JLabel TituloL1;
     private javax.swing.JLabel TituloL2;
     private javax.swing.JLabel TituloL3;
@@ -1262,14 +1072,9 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel TituloL6;
     private javax.swing.JLabel TituloL7;
     private javax.swing.JLabel TituloL8;
-    private javax.swing.JButton VerCadastro;
-    private javax.swing.JComboBox<String> gen;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1301,6 +1106,5 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

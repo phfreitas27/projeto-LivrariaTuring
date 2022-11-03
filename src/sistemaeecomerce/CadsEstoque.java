@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import sistemaeecomerce.Classes.Livro;
 import sistemaeecomerce.Classes.MySQL;
 import java.sql.ResultSet;
+import sistemaeecomerce.Classes.Query;
 
 
 /**
@@ -22,7 +23,7 @@ import java.sql.ResultSet;
  */
 public class CadsEstoque extends javax.swing.JFrame {
 
-       ResultSet rs = null;
+    Query query = new Query();
 
     
     public CadsEstoque() {
@@ -31,20 +32,13 @@ public class CadsEstoque extends javax.swing.JFrame {
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
         
+        ArrayList<String> generos = new ArrayList();
         
-        String sql1 = "select * from rgenero";
-        MySQL factory = new MySQL();
-        try (Connection c = factory.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql1);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             gen.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
+        generos = query.MostrarGeneros();
+        
+        for (int i = 0; i < generos.size(); i++) {
+            gen.addItem(generos.get(i));
         }
-        
         
         Livro l = new Livro();
 
@@ -270,11 +264,6 @@ public class CadsEstoque extends javax.swing.JFrame {
        String editoras = Edi.getText().trim();
        String autores = Aut.getText().trim();
        String genero = gen.getSelectedItem().toString();
-       try {
-           Double.parseDouble(Preco.getText());
-       } catch (Exception e) {
-           JOptionPane.showMessageDialog(null, "O preço deve ser um número!");
-       }
        
        if(Preco.getText().length() > 0) {
             String formatted = Preco.getText();
@@ -287,6 +276,12 @@ public class CadsEstoque extends javax.swing.JFrame {
                 combined = combined.replaceFirst("0", "");
             }
             
+            try {
+                Double.parseDouble(combined);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "O preço deve ser um número!");
+            }
+       
             
             Livro l = new Livro(nomes, Double.parseDouble(combined), Integer.parseInt(unidades), editoras, autores, genero);
        

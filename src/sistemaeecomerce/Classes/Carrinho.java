@@ -4,6 +4,7 @@ package sistemaeecomerce.Classes;
 import java.util.ArrayList;
 
 public class Carrinho extends Cliente{
+    private Query query = new Query();
     private int quantidade;
     private String Id;
     private double valor;
@@ -34,7 +35,7 @@ public class Carrinho extends Cliente{
     }
     
     public void AddCarrinho(String IdLivro, String IdUsuario){
-        
+        query.AdicionarCarrinho(this.Id ,IdLivro, IdUsuario);
     }
     
     public void verDetalhes(){

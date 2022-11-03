@@ -88,6 +88,10 @@ public class Livro {
         return query.PesquisarLivros(nome);
     }
     
+    public ArrayList<ArrayList<String>> pesquisarLivrosGenero(String genero) {
+        return query.PesquisarLivrosGenero(genero);
+    }
+    
     public String getIdBd(String nome) {
         String id = query.PegarIdLivro(nome);
         return id;

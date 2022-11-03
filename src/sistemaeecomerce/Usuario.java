@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
-import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Livro;
 
 /**
@@ -15,19 +14,11 @@ import sistemaeecomerce.Classes.Livro;
  * @author User
  */
 public class Usuario extends javax.swing.JFrame {
-    String IdUsuario;
-    
-    public void setIdUsuario(String Id) {
-        this.IdUsuario = Id;
-        jLabel4.setText(this.IdUsuario);
-    }
-    
+
     /**
      * Creates new form Usuario
      */
     public Usuario() {
-        
-        
         initComponents();
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
@@ -149,17 +140,16 @@ public class Usuario extends javax.swing.JFrame {
         EditoraL1 = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         AutorL1 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         BuscaLivro = new javax.swing.JTextPane();
+        jLabel1 = new javax.swing.JLabel();
         Pesquisar = new javax.swing.JButton();
         Titulo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         VerCadastro = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        gen = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -239,7 +229,6 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(16, 6, 0, 0);
         jPanel1.add(L2, gridBagConstraints);
 
@@ -315,7 +304,7 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(16, 6, 0, 0);
         jPanel1.add(L3, gridBagConstraints);
 
@@ -391,7 +380,6 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(16, 6, 0, 10);
         jPanel1.add(L4, gridBagConstraints);
 
@@ -467,7 +455,6 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(6, 10, 17, 0);
         jPanel1.add(L5, gridBagConstraints);
 
@@ -543,7 +530,6 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(6, 10, 17, 0);
         jPanel1.add(L6, gridBagConstraints);
 
@@ -619,7 +605,6 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 17, 0);
         jPanel1.add(L7, gridBagConstraints);
 
@@ -695,7 +680,6 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 17, 10);
         jPanel1.add(L8, gridBagConstraints);
 
@@ -705,11 +689,6 @@ public class Usuario extends javax.swing.JFrame {
         TituloL1.setText("Titulo");
 
         CarrinhoL1.setText("Adicionar ao Carrinho");
-        CarrinhoL1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CarrinhoL1ActionPerformed(evt);
-            }
-        });
 
         jLabel28.setText("Preço:");
 
@@ -776,13 +755,17 @@ public class Usuario extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(16, 10, 0, 0);
         jPanel1.add(L1, gridBagConstraints);
+
+        jButton1.setText("Meu carrinho");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/comprar1.png"))); // NOI18N
 
         jScrollPane1.setViewportView(BuscaLivro);
+
+        jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
+        jLabel1.setText("Digite qual livro deseja comprar:");
 
         Pesquisar.setText("Pesquisar");
         Pesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -794,9 +777,6 @@ public class Usuario extends javax.swing.JFrame {
         Titulo.setFont(new java.awt.Font("Baskerville Old Face", 0, 36)); // NOI18N
         Titulo.setText("Bem Vindo!");
 
-        jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 1, 24)); // NOI18N
-        jLabel1.setText("Digite qual livro deseja comprar:");
-
         VerCadastro.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         VerCadastro.setText("Meu cadastro");
         VerCadastro.addActionListener(new java.awt.event.ActionListener() {
@@ -807,107 +787,87 @@ public class Usuario extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/cadastro1.png"))); // NOI18N
 
-        jLabel4.setText("ID");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(Titulo)
-                .addGap(243, 243, 243)
-                .addComponent(VerCadastro)
-                .addGap(98, 98, 98)
-                .addComponent(jLabel2)
-                .addGap(49, 49, 49)
-                .addComponent(jLabel4))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(165, 165, 165)
-                .addComponent(jLabel3)
-                .addGap(98, 98, 98)
-                .addComponent(jLabel1))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(337, 337, 337)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(359, 359, 359)
-                .addComponent(Pesquisar))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(Titulo))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(VerCadastro))
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel4)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel3))
-                    .addComponent(jLabel1))
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(Pesquisar))
-        );
-
-        jButton1.setText("Meu carrinho");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(389, 389, 389)
+                        .addComponent(Pesquisar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(333, 333, 333)
+                        .addComponent(Titulo)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel2)
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(VerCadastro)
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton1)))
+                .addGap(98, 98, 98))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(Titulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(VerCadastro))))
+                .addGap(5, 5, 5)
+                .addComponent(Pesquisar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CarrinhoL1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL1ActionPerformed
-        Livro l = new Livro();
-        Carrinho c = new Carrinho();
-        
-        ArrayList<ArrayList<String>> arr = l.pesquisarLivros(TituloL1.getText());
-        
-        c.AddCarrinho(arr.get(0).get(0), IdUsuario);
-        
-    }//GEN-LAST:event_CarrinhoL1ActionPerformed
-
     private void VerCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerCadastroActionPerformed
         setVisible(false);
     }//GEN-LAST:event_VerCadastroActionPerformed
 
     private void PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarActionPerformed
-
+        
         Livro l = new Livro();
 
+        ArrayList<ArrayList<String>> arr = l.pesquisarLivros(BuscaLivro.getText());
+        
         javax.swing.JPanel[] lista = {L1, L2, L3, L4, L5, L6, L7, L8};
         javax.swing.JLabel[] titulos = {TituloL1, TituloL2, TituloL3, TituloL4, TituloL5, TituloL6, TituloL7, TituloL8};
         javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
@@ -915,28 +875,28 @@ public class Usuario extends javax.swing.JFrame {
         javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
 
         ArrayList<ArrayList<String>> arrL = l.pesquisarLivros(BuscaLivro.getText());
-
+        
         for (int i = 0; i < lista.length; i++) {
-
+            
             if(i < arrL.size()) {
                 String nomes1 = arrL.get(i).get(1);
                 String precos1 = arrL.get(i).get(2);
                 String unidades1 = arrL.get(i).get(3);
                 String editoras1 = arrL.get(i).get(4);
                 String autores1 = arrL.get(i).get(5);
-
+                
                 if(nomes1.length() > 15) {
-
+                    
                 }
-
+                
                 titulos[i].setText("<html><p style=\"width:120px\">"+nomes1+"</p></html>");
                 precos[i].setText(precos1);
                 editoras[i].setText(editoras1);
                 autores[i].setText(autores1);
-
+                
             } else {
                 lista[i].setVisible(false);
-            }
+            }  
         }
     }//GEN-LAST:event_PesquisarActionPerformed
 
@@ -1028,6 +988,7 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel TituloL7;
     private javax.swing.JLabel TituloL8;
     private javax.swing.JButton VerCadastro;
+    private javax.swing.JComboBox<String> gen;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1053,12 +1014,10 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

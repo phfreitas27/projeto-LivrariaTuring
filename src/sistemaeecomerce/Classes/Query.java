@@ -146,6 +146,7 @@ public class Query {
                 arr.get(i).add(Integer.toString(rs.getInt("stock")));
                 arr.get(i).add(rs.getString("publisher"));
                 arr.get(i).add(rs.getString("author"));
+                arr.get(i).add(rs.getString("genero"));
                 i++;
             }
             
@@ -181,6 +182,7 @@ public class Query {
                 arr.get(i).add(Integer.toString(rs.getInt("stock")));
                 arr.get(i).add(rs.getString("publisher"));
                 arr.get(i).add(rs.getString("author"));
+                arr.get(i).add(rs.getString("genero"));
                 i++;
             }
             
@@ -195,8 +197,8 @@ public class Query {
         return pvMostrarLivros();
     }
     
-    private String pvInserirLivro(String nome, String autor, String editora, double preco, int unidade) {
-        String sql = "INSERT INTO book(price, stock, name, publisher, author) VALUES (?, ?, ?, ?, ?)";
+    private String pvInserirLivro(String nome, String autor, String editora, double preco, int unidade, String genero) {
+        String sql = "INSERT INTO book(price, stock, name, publisher, author, genero) VALUES (?, ?, ?, ?, ?,?)";
             //2: Abrir uma conexão
             MySQL factory = new MySQL();
             try (Connection c = factory.obtemConexao()) {
@@ -208,6 +210,7 @@ public class Query {
                 ps.setString(3, nome);
                 ps.setString(4, editora);
                 ps.setString(5, autor);
+                ps.setString(6, genero);
                 //5: Executa o comando
                 ps.execute();
             } catch (Exception e) {
@@ -234,12 +237,12 @@ public class Query {
         return "Erro";
     }
     
-    public String InserirLivro(String nome, String autor, String editora, double preco, int unidade) {
-        return pvInserirLivro(nome, autor, editora, preco, unidade);
+    public String InserirLivro(String nome, String autor, String editora, double preco, int unidade, String genero) {
+        return pvInserirLivro(nome, autor, editora, preco, unidade, genero);
     }
     
     private void pvInserirUsuario(String login, String senha, String email, String nome, int idade) {
-            //1: Definir o comando SQL
+        //1: Definir o comando SQL
             String sql = "INSERT INTO user(login, password, email, nome, idade) VALUES (?, ?, ?, ?, ?)";
             //2: Abrir uma conexão
             MySQL factory = new MySQL();
@@ -292,27 +295,4 @@ public class Query {
     public boolean ChecarAdmin(String loginIns) {
         return pvChecarAdmin(loginIns);
     }
-    
-    private void pvInserirCarrinho(String Id, String IdLivro, String IdUsuario) {
-            //1: Definir o comando SQL
-            String sql = "INSERT INTO cart(id, idBook, idUser) VALUES (?, ?, ?)";
-            //2: Abrir uma conexão
-            MySQL factory = new MySQL();
-            try (Connection c = factory.obtemConexao()) {
-                //3: Pré compila o comando
-                PreparedStatement ps = c.prepareStatement(sql);
-                //4: Preenche os dados faltantes
-                ps.setString(1, Id);
-                ps.setString(2, IdLivro);
-                ps.setString(3, IdUsuario);
-                //5: Executa o comando
-                ps.execute();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-    }
-    
-     public void InserirCarrinho(String Id, String IdLivro, String IdUsuario) {
-         pvInserirCarrinho(Id, IdLivro, IdUsuario);
-     }
 }

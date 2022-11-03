@@ -151,10 +151,6 @@ public class Loginv2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_senhaActionPerformed
 
-    public String getUsuario() {
-        return usuario2.getText();
-    }
-    
     private void logarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logarActionPerformed
         Pessoa p = new Pessoa();
         if(p.logar(usuario2.getText(), senha.getText())){
@@ -168,7 +164,6 @@ public class Loginv2 extends javax.swing.JFrame {
                 System.out.println("Usuario conectado");
                 setVisible(false);
                 Usuario usuario = new Usuario();
-                usuario.setIdUsuario(usuario2.getText());
                 usuario.setLocationRelativeTo(null);
                 usuario.setVisible(true);
             }

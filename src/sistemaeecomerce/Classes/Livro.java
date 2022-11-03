@@ -13,6 +13,15 @@ public class Livro {
     private int unidade;
     private String editora;
     private String autor;
+    private String genero;
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
 
     public String getAutor() {
         return autor;
@@ -67,7 +76,7 @@ public class Livro {
      
     public void Inserir() {
         
-        this.setId(query.InserirLivro(nome, autor, editora, preco, unidade));
+        this.setId(query.InserirLivro(nome, autor, editora, preco, unidade, genero));
         
     }
     
@@ -79,12 +88,13 @@ public class Livro {
         return query.PesquisarLivros(nome);
     }
 
-    public Livro(String nome, double preco, int unidade, String editora, String autor) {
+    public Livro(String nome, double preco, int unidade, String editora, String autor, String genero) {
         this.nome = nome;
         this.preco = preco;
         this.unidade = unidade;
         this.editora = editora;
         this.autor = autor;
+        this.genero = genero;
     }
 
     public Livro() {

@@ -787,6 +787,12 @@ public class Usuario extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/cadastro1.png"))); // NOI18N
 
+        gen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                genMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -899,6 +905,10 @@ public class Usuario extends javax.swing.JFrame {
             }  
         }
     }//GEN-LAST:event_PesquisarActionPerformed
+
+    private void genMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_genMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_genMouseClicked
 
     /**
      * @param args the command line arguments

@@ -1167,6 +1167,7 @@ public class Usuario extends javax.swing.JFrame {
         c.setId(IdCarrinho);
         c.setVisible(true);
         this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

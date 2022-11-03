@@ -289,6 +289,7 @@ public class AltEstoque extends javax.swing.JFrame {
         AdminTela adm = new AdminTela();
         adm.setVisible(true);
         adm.setLocationRelativeTo(null);
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void rprecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rprecoActionPerformed

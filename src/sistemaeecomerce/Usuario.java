@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.UUID;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Livro;
@@ -37,6 +38,7 @@ public class Usuario extends javax.swing.JFrame {
        Carrinho c = new Carrinho();
        c.setId(this.IdCarrinho);
        c.AddCarrinho(Id, IdUsuario);
+       JOptionPane.showMessageDialog(null, "Livro adicionado ao carrinho!");
    }
     /**
      * Creates new form Usuario

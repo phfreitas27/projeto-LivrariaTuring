@@ -6,6 +6,7 @@ package sistemaeecomerce;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import javax.swing.JOptionPane;
 import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Livro;
 
@@ -23,8 +24,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
         this.IdUsuario = IdUsuario;
     }
     
-    public void setId(String Id) {
-        this.Id = Id;
+    public void atualizar() {
         javax.swing.JPanel[] lista = {L1, L2, L3, L4, L5, L6, L7, L8};
         javax.swing.JLabel[] titulos = {TituloL1, TituloL2, TituloL3, TituloL4, TituloL5, TituloL6, TituloL7, TituloL8};
         javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
@@ -63,12 +63,18 @@ public class CarrinhoTela extends javax.swing.JFrame {
         }
     }
     
+    public void setId(String Id) {
+        this.Id = Id;
+        atualizar();
+    }
+    
     public void remCarrinho(String nome) {
         Livro l = new Livro();
         String IdLivro = l.getIdBd(nome);
         Carrinho c = new Carrinho();
         c.RemCarrinho(IdLivro, Id);
-        setId(Id);
+        atualizar();
+        JOptionPane.showMessageDialog(null, "Livro removido do carrinho!");
     }
     
     /**

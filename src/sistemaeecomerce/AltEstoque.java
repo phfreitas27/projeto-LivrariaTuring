@@ -356,8 +356,8 @@ public class AltEstoque extends javax.swing.JFrame {
             ps.setString(3, runi.getText());
             ps.setString(4, reditora.getText());
             ps.setString(5, rautor.getText());
-            ps.setString(6, Idlivro.getText());
-            ps.setString(7, (String) gen.getSelectedItem());
+            ps.setString(7, Idlivro.getText());
+            ps.setString(6, (String) gen.getSelectedItem());
             int adicionado = ps.executeUpdate();
             if (adicionado > 0) {
                 JOptionPane.showMessageDialog(null, "Alteração concluída!");

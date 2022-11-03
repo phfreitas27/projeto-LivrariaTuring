@@ -241,20 +241,34 @@ public class CadsEstoque extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "O preço deve ser um número!");
        }
        
-       Livro l = new Livro(nomes, Double.parseDouble(precos), Integer.parseInt(unidades), editoras, autores, genero);
+       if(Preco.getText().length() > 0) {
+            String formatted = Preco.getText();
+            
+            String partOne = formatted.substring(2, formatted.length() - 3);
+            String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+            String combined = partOne + "." + partTwo;
+            
+            while(combined.length() != 0 && combined.charAt(0) == '0') {
+                combined = combined.replaceFirst("0", "");
+            }
+            
+            
+            Livro l = new Livro(nomes, Double.parseDouble(combined), Integer.parseInt(unidades), editoras, autores, genero);
        
-       l.Inserir();
-       
-       String IDs = l.getId();
-       
-       DefaultTableModel val = (DefaultTableModel) Tabela.getModel();
-       val.addRow(new String[]{IDs, nomes, precos, unidades, editoras, autores, genero});
+            l.Inserir();
 
-       nome.setText("");
-       Preco.setText("");
-       Uni.setText("");
-       Edi.setText("");
-       Aut.setText("");
+            String IDs = l.getId();
+
+            DefaultTableModel val = (DefaultTableModel) Tabela.getModel();
+            val.addRow(new String[]{IDs, nomes, precos, unidades, editoras, autores, genero});
+
+            nome.setText("");
+            Preco.setText("");
+            Uni.setText("");
+            Edi.setText("");
+            Aut.setText("");
+        }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void PrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PrecoKeyTyped
@@ -268,7 +282,7 @@ public class CadsEstoque extends javax.swing.JFrame {
     private void PrecoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PrecoFocusGained
         if(Preco.getText().length() > 0) {
             String formatted = Preco.getText();
-
+            
             String partOne = formatted.substring(2, formatted.length() - 3);
             String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
             String combined = partOne + partTwo;
@@ -278,8 +292,8 @@ public class CadsEstoque extends javax.swing.JFrame {
             }
             
             Preco.setText(combined);
-            
-           /* if(Integer.parseInt(combined) == 0) {
+           /* 
+           if(Integer.parseInt(combined) == 0 || combined.equals("")) {
                 Preco.setText("");
             } else {
                 Preco.setText(combined);
@@ -290,7 +304,7 @@ public class CadsEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_PrecoFocusGained
 
     private void PrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PrecoFocusLost
-      /*  String plainText = Preco.getText();
+        String plainText = Preco.getText();
         String formatted = "";
         switch (plainText.length()) {
             case 0:
@@ -333,7 +347,7 @@ public class CadsEstoque extends javax.swing.JFrame {
         }
         
         Preco.setText(formatted);
-        */
+        
     }//GEN-LAST:event_PrecoFocusLost
 
     private void TabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaMouseClicked

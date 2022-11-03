@@ -33,7 +33,7 @@ public class Carrinho extends Cliente{
         this.valor = valor;
     }
     
-    public void AddCarrinho(String Id){
+    public void AddCarrinho(String IdLivro, String IdUsuario){
         
     }
     

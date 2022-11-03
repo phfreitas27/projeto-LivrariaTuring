@@ -6,7 +6,9 @@ package sistemaeecomerce;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.UUID;
 import javax.swing.table.DefaultTableModel;
+import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Livro;
 
 /**
@@ -14,7 +16,21 @@ import sistemaeecomerce.Classes.Livro;
  * @author User
  */
 public class Usuario extends javax.swing.JFrame {
-
+    
+   String IdUsuario;
+   String IdCarrinho;
+    
+   public void setIdUsuario(String Id) {
+       this.IdUsuario = Id;
+   }
+   
+   private void addCarrinho(String nome) {
+       Livro l = new Livro();
+       String Id = l.getIdBd(nome);
+       Carrinho c = new Carrinho();
+       c.setId(this.IdCarrinho);
+       c.AddCarrinho(Id, IdUsuario);
+   }
     /**
      * Creates new form Usuario
      */
@@ -27,6 +43,8 @@ public class Usuario extends javax.swing.JFrame {
         javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
         javax.swing.JTextField[] editoras = {EditoraL1, EditoraL2, EditoraL3, EditoraL4, EditoraL5, EditoraL6, EditoraL7, EditoraL8};
         javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
+        
+        this.IdCarrinho = UUID.randomUUID().toString();
         
         Livro l = new Livro();
 
@@ -163,6 +181,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL2.setText("Titulo");
 
         CarrinhoL2.setText("Adicionar ao Carrinho");
+        CarrinhoL2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL2ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Preço:");
 
@@ -238,6 +261,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL3.setText("Titulo");
 
         CarrinhoL3.setText("Adicionar ao Carrinho");
+        CarrinhoL3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL3ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Preço:");
 
@@ -314,6 +342,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL4.setText("Titulo");
 
         CarrinhoL4.setText("Adicionar ao Carrinho");
+        CarrinhoL4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL4ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Preço:");
 
@@ -389,6 +422,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL5.setText("Titulo");
 
         CarrinhoL5.setText("Adicionar ao Carrinho");
+        CarrinhoL5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL5ActionPerformed(evt);
+            }
+        });
 
         jLabel16.setText("Preço:");
 
@@ -464,6 +502,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL6.setText("Titulo");
 
         CarrinhoL6.setText("Adicionar ao Carrinho");
+        CarrinhoL6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL6ActionPerformed(evt);
+            }
+        });
 
         jLabel19.setText("Preço:");
 
@@ -539,6 +582,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL7.setText("Titulo");
 
         CarrinhoL7.setText("Adicionar ao Carrinho");
+        CarrinhoL7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL7ActionPerformed(evt);
+            }
+        });
 
         jLabel22.setText("Preço:");
 
@@ -614,6 +662,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL8.setText("Titulo");
 
         CarrinhoL8.setText("Adicionar ao Carrinho");
+        CarrinhoL8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL8ActionPerformed(evt);
+            }
+        });
 
         jLabel25.setText("Preço:");
 
@@ -689,6 +742,11 @@ public class Usuario extends javax.swing.JFrame {
         TituloL1.setText("Titulo");
 
         CarrinhoL1.setText("Adicionar ao Carrinho");
+        CarrinhoL1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CarrinhoL1ActionPerformed(evt);
+            }
+        });
 
         jLabel28.setText("Preço:");
 
@@ -899,6 +957,38 @@ public class Usuario extends javax.swing.JFrame {
             }  
         }
     }//GEN-LAST:event_PesquisarActionPerformed
+
+    private void CarrinhoL1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL1ActionPerformed
+        addCarrinho(TituloL1.getText());
+    }//GEN-LAST:event_CarrinhoL1ActionPerformed
+
+    private void CarrinhoL2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL2ActionPerformed
+        addCarrinho(TituloL2.getText());
+    }//GEN-LAST:event_CarrinhoL2ActionPerformed
+
+    private void CarrinhoL3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL3ActionPerformed
+        addCarrinho(TituloL3.getText());
+    }//GEN-LAST:event_CarrinhoL3ActionPerformed
+
+    private void CarrinhoL4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL4ActionPerformed
+        addCarrinho(TituloL4.getText());
+    }//GEN-LAST:event_CarrinhoL4ActionPerformed
+
+    private void CarrinhoL5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL5ActionPerformed
+        addCarrinho(TituloL5.getText());
+    }//GEN-LAST:event_CarrinhoL5ActionPerformed
+
+    private void CarrinhoL6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL6ActionPerformed
+        addCarrinho(TituloL6.getText());
+    }//GEN-LAST:event_CarrinhoL6ActionPerformed
+
+    private void CarrinhoL7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL7ActionPerformed
+        addCarrinho(TituloL7.getText());
+    }//GEN-LAST:event_CarrinhoL7ActionPerformed
+
+    private void CarrinhoL8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL8ActionPerformed
+        addCarrinho(TituloL8.getText());
+    }//GEN-LAST:event_CarrinhoL8ActionPerformed
 
     /**
      * @param args the command line arguments

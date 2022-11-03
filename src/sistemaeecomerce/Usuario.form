@@ -212,6 +212,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL2ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -336,6 +339,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL3ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
@@ -460,6 +466,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL4ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel13">
               <Properties>
@@ -584,6 +593,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL5ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
               <Properties>
@@ -708,6 +720,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL6ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel19">
               <Properties>
@@ -832,6 +847,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL7ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel22">
               <Properties>
@@ -956,6 +974,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL8ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel25">
               <Properties>
@@ -1080,6 +1101,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CarrinhoL1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel28">
               <Properties>

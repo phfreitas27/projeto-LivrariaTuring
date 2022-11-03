@@ -123,6 +123,32 @@ public class Query {
         return pvLogar(loginIns);
     }
     
+    private String pvPegarIdLivro(String nome) {
+        MySQL factory = new MySQL();
+        String Id = "";
+        //1: Definir o comando SQL
+        String sql = "SELECT * FROM biblioteca.book WHERE name = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, nome);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            rs.next();
+            Id = Integer.toString(rs.getInt("id"));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Id;
+    }
+    
+    public String PegarIdLivro(String nome) {
+        return pvPegarIdLivro(nome);
+    }
+    
     private ArrayList<ArrayList<String>> pvPesquisarLivros(String nome) {
         ArrayList<ArrayList<String>> arr = new ArrayList<>();
         MySQL factory = new MySQL();

@@ -87,6 +87,11 @@ public class Livro {
     public ArrayList<ArrayList<String>> pesquisarLivros(String nome) {
         return query.PesquisarLivros(nome);
     }
+    
+    public String getIdBd(String nome) {
+        String id = query.PegarIdLivro(nome);
+        return id;
+    }
 
     public Livro(String nome, double preco, int unidade, String editora, String autor, String genero) {
         this.nome = nome;

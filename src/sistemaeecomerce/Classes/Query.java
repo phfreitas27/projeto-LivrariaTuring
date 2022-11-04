@@ -406,6 +406,48 @@ public class Query {
         return pvMostrarGeneros();
     }
     
+    private ArrayList<String> pvMostrarAutores() {
+        ArrayList arr = new ArrayList();
+        String sql1 = "select * from rautor";
+        MySQL factory = new MySQL();
+        try (Connection c = factory.obtemConexao()){
+             PreparedStatement ps = c.prepareStatement(sql1);
+             ResultSet rs = ps.executeQuery();
+             int i = 0;
+             while(rs.next()){
+             arr.add(rs.getString(2));
+             }
+        } catch (Exception e ){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return arr;
+    }
+    
+    public ArrayList<String> MostrarAutores() {
+        return pvMostrarAutores();
+    }
+    
+    private ArrayList<String> pvMostrarEditoras() {
+        ArrayList arr = new ArrayList();
+        String sql1 = "select * from reditora";
+        MySQL factory = new MySQL();
+        try (Connection c = factory.obtemConexao()){
+             PreparedStatement ps = c.prepareStatement(sql1);
+             ResultSet rs = ps.executeQuery();
+             int i = 0;
+             while(rs.next()){
+             arr.add(rs.getString(2));
+             }
+        } catch (Exception e ){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return arr;
+    }
+    
+    public ArrayList<String> MostrarEditoras() {
+        return pvMostrarEditoras();
+    }
+    
     private void pvRemoverCarrinho(String Id, String IdLivro) {
         //1: Definir o comando SQL
             String sql = "DELETE FROM cart WHERE id = ? AND idBook = ?";
@@ -493,5 +535,47 @@ public class Query {
     
     public ArrayList<String> PesquisarLivroId(String Id) {
         return pvPesquisarLivroId(Id);
+    }
+    
+    private void pvAdicionarAutor(String nome) {
+        //1: Definir o comando SQL
+            String sql = "INSERT INTO `rautor`(`autor`) VALUES (?)";
+            //2: Abrir uma conexão
+            MySQL factory = new MySQL();
+            try (Connection c = factory.obtemConexao()) {
+                //3: Pré compila o comando
+                PreparedStatement ps = c.prepareStatement(sql);
+                //4: Preenche os dados faltantes
+                ps.setString(1, nome);
+                //5: Executa o comando
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+    
+    public void AdicionarAutor(String nome) {
+        pvAdicionarAutor(nome);
+    }
+    
+    private void pvAdicionarEditora(String nome) {
+        //1: Definir o comando SQL
+            String sql = "INSERT INTO `reditora`(`editora`) VALUES (?)";
+            //2: Abrir uma conexão
+            MySQL factory = new MySQL();
+            try (Connection c = factory.obtemConexao()) {
+                //3: Pré compila o comando
+                PreparedStatement ps = c.prepareStatement(sql);
+                //4: Preenche os dados faltantes
+                ps.setString(1, nome);
+                //5: Executa o comando
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+    
+    public void AdicionarEditora(String nome) {
+        pvAdicionarEditora(nome);
     }
 }

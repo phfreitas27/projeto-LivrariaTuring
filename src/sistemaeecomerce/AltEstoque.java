@@ -13,9 +13,11 @@ import sistemaeecomerce.Classes.Livro;
 import sistemaeecomerce.Classes.MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sistemaeecomerce.AdminTela;
+import sistemaeecomerce.Classes.Query;
 
 /**
  *
@@ -34,44 +36,32 @@ public class AltEstoque extends javax.swing.JFrame {
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
         
-        String sql1 = "select * from rgenero";
-        MySQL factory = new MySQL();
-        try (Connection c = factory.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql1);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             gen.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
-        }
-         String sql2 = "select * from rautor";
-        MySQL factory1 = new MySQL();
-        try (Connection c = factory1.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql2);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             rautor.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
+        Query query = new Query();
+        
+        ArrayList<String> generos1 = new ArrayList();
+        
+        generos1 = query.MostrarGeneros();
+        
+        for (int i = 0; i < generos1.size(); i++) {
+            gen.addItem(generos1.get(i));
         }
         
-        String sql3 = "select * from reditora";
-        MySQL factory2 = new MySQL();
-        try (Connection c = factory2.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql3);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             reditora.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
+        ArrayList<String> autores1 = new ArrayList();
+        
+        autores1 = query.MostrarAutores();
+        
+        for (int i = 0; i < autores1.size(); i++) {
+            Aut.addItem(autores1.get(i));
         }
-    }   
+        
+        ArrayList<String> editoras1 = new ArrayList();
+        
+        editoras1 = query.MostrarEditoras();
+        
+        for (int i = 0; i < editoras1.size(); i++) {
+            Edi.addItem(editoras1.get(i));
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,15 +86,15 @@ public class AltEstoque extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         rnome = new javax.swing.JTextPane();
-        rpreco = new javax.swing.JTextField();
+        Preco = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         runi = new javax.swing.JTextPane();
         Alteracao = new javax.swing.JButton();
         Deletar = new javax.swing.JButton();
         gen = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        rautor = new javax.swing.JComboBox<>();
-        reditora = new javax.swing.JComboBox<>();
+        Aut = new javax.swing.JComboBox<>();
+        Edi = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -145,9 +135,17 @@ public class AltEstoque extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(rnome);
 
-        rpreco.addActionListener(new java.awt.event.ActionListener() {
+        Preco.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                PrecoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                PrecoFocusLost(evt);
+            }
+        });
+        Preco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rprecoActionPerformed(evt);
+                PrecoActionPerformed(evt);
             }
         });
 
@@ -169,15 +167,15 @@ public class AltEstoque extends javax.swing.JFrame {
 
         jLabel8.setText("Genero");
 
-        rautor.addActionListener(new java.awt.event.ActionListener() {
+        Aut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rautorActionPerformed(evt);
+                AutActionPerformed(evt);
             }
         });
 
-        reditora.addActionListener(new java.awt.event.ActionListener() {
+        Edi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reditoraActionPerformed(evt);
+                EdiActionPerformed(evt);
             }
         });
 
@@ -201,7 +199,7 @@ public class AltEstoque extends javax.swing.JFrame {
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rpreco))
+                                    .addComponent(Preco))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,8 +213,8 @@ public class AltEstoque extends javax.swing.JFrame {
                                         .addGap(40, 40, 40)
                                         .addComponent(Deletar))
                                     .addComponent(gen, 0, 201, Short.MAX_VALUE)
-                                    .addComponent(rautor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(reditora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(Aut, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Edi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
@@ -250,7 +248,7 @@ public class AltEstoque extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rpreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Preco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -259,11 +257,11 @@ public class AltEstoque extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Edi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rautor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Aut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,9 +290,9 @@ public class AltEstoque extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void rprecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rprecoActionPerformed
+    private void PrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrecoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rprecoActionPerformed
+    }//GEN-LAST:event_PrecoActionPerformed
 
     private void AlteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlteracaoActionPerformed
         Alterar();
@@ -304,13 +302,76 @@ public class AltEstoque extends javax.swing.JFrame {
         Remover();
     }//GEN-LAST:event_DeletarActionPerformed
 
-    private void rautorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rautorActionPerformed
+    private void AutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AutActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rautorActionPerformed
+    }//GEN-LAST:event_AutActionPerformed
 
-    private void reditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reditoraActionPerformed
+    private void EdiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EdiActionPerformed
 
-    }//GEN-LAST:event_reditoraActionPerformed
+    }//GEN-LAST:event_EdiActionPerformed
+
+    private void PrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PrecoFocusLost
+        String plainText = Preco.getText();
+        String formatted = "";
+        switch (plainText.length()) {
+            case 0:
+                formatted = "R$0,00";
+                break;
+            case 1:
+                formatted = "R$0,0" + plainText;
+                break;
+            case 2:
+                formatted = "R$0," + plainText;
+                break;
+            default:
+                String partOne = plainText.substring(0, plainText.length() - 2);
+                String partTwo = plainText.substring(plainText.length() - 2, plainText.length());
+                int k = 0;
+                boolean doSubtring = false;
+                for (int i = 0; i < partOne.length(); i++) {
+                    
+                    if(Character.toString(partOne.charAt(i)).equals("0")) {
+                        doSubtring = true;
+                        k++;
+                    } else {
+                        if(doSubtring) {
+                            partOne = partOne.substring(k);
+                        }
+                        break;
+                    }
+                    
+                    if(i == partOne.length() - 1) {
+                        if(doSubtring) {
+                            partOne = partOne.substring(k - 1);
+                        }
+                        break;
+                    }
+                    
+                }
+                
+                formatted = "R$" + partOne + "," + partTwo;
+                break;
+        }
+        
+        Preco.setText(formatted);
+    }//GEN-LAST:event_PrecoFocusLost
+
+    private void PrecoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PrecoFocusGained
+        if(Preco.getText().length() > 0) {
+            String formatted = Preco.getText();
+
+            String partOne = formatted.substring(2, formatted.length() - 3);
+            String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+            String combined = partOne + partTwo;
+            
+            while(combined.length() != 0 && combined.charAt(0) == '0') {
+                combined = combined.replaceFirst("0", "");
+            }
+            
+            Preco.setText(combined);
+            
+        }
+    }//GEN-LAST:event_PrecoFocusGained
 
     /**
      * @param args the command line arguments
@@ -357,13 +418,66 @@ public class AltEstoque extends javax.swing.JFrame {
             if (rs.next()) {
                 Idlivro.setText(rs.getString(1));
                 rnome.setText(rs.getString(2));
-                rpreco.setText(rs.getString(3));
+                if(rs.getString(3).length() > 0) {
+                    String formatted = rs.getString(3);
+
+                    String partOne = formatted.substring(0, formatted.length() - 3);
+                    String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+                    String combined = partOne + partTwo;
+                    System.out.println(combined);
+                    String plainText = combined;
+                    formatted = "";
+                    switch (plainText.length()) {
+                        case 0:
+                            formatted = "R$0,00";
+                            break;
+                        case 1:
+                            formatted = "R$0,0" + plainText;
+                            break;
+                        case 2:
+                            formatted = "R$0," + plainText;
+                            break;
+                        default:
+                            partOne = plainText.substring(0, plainText.length() - 2);
+                            partTwo = plainText.substring(plainText.length() - 2, plainText.length());
+                            int k = 0;
+                            boolean doSubtring = false;
+                            for (int i = 0; i < partOne.length(); i++) {
+
+                                if(Character.toString(partOne.charAt(i)).equals("0")) {
+                                    doSubtring = true;
+                                    k++;
+                                } else {
+                                    if(doSubtring) {
+                                        partOne = partOne.substring(k);
+                                    }
+                                    break;
+                                }
+
+                                if(i == partOne.length() - 1) {
+                                    if(doSubtring) {
+                                        partOne = partOne.substring(k - 1);
+                                    }
+                                    break;
+                                }
+
+                            }
+
+                            formatted = "R$" + partOne + "," + partTwo;
+                            break;
+                    }
+
+                    Preco.setText(formatted);
+                    Aut.setSelectedItem(rs.getString("author"));
+                    Edi.setSelectedItem(rs.getString("publisher"));
+                    gen.setSelectedItem("genero");
+                }
                 runi.setText(rs.getString(4));
             } else {
                 JOptionPane.showMessageDialog(null, "Livro não Cadastrado!!");
                 Idlivro.setText(null);
                 rnome.setText(null);
-                rpreco.setText(null);
+                Preco.setText(null);
                 runi.setText(null);
             }
         } catch (Exception e) {
@@ -381,15 +495,27 @@ public class AltEstoque extends javax.swing.JFrame {
     }
 
     private void Alterar() {
+        String combined = "0.00";
+        if(Preco.getText().length() > 0) {
+            String formatted = Preco.getText();
+
+            String partOne = formatted.substring(2, formatted.length() - 3);
+            String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+            combined = partOne + "." + partTwo;
+            
+            while(combined.length() != 0 && combined.charAt(0) == '0') {
+                combined = combined.replaceFirst("0", "");
+            }
+        }
         String sql = "UPDATE book SET name=?, price=?, stock = ?, publisher=?, author=? ,genero=? WHERE id=?";
         MySQL factory = new MySQL();
         try ( Connection c = factory.obtemConexao()) {
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setString(1, rnome.getText());
-            ps.setString(2, rpreco.getText());
+            ps.setString(2, combined);
             ps.setString(3, runi.getText());
-            ps.setString(4, (String)reditora.getSelectedItem());
-            ps.setString(5, (String) rautor.getSelectedItem());
+            ps.setString(4, (String)Edi.getSelectedItem());
+            ps.setString(5, (String) Aut.getSelectedItem());
             ps.setString(7, Idlivro.getText());
             ps.setString(6, (String) gen.getSelectedItem());
             int adicionado = ps.executeUpdate();
@@ -397,10 +523,10 @@ public class AltEstoque extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Alteração concluída!");
                 Idlivro.setText(null);
                 rnome.setText(null);
-                rpreco.setText(null);
+                Preco.setText(null);
                 runi.setText(null);
-                reditora.addItem(null);
-                rautor.addItem(null);
+                Edi.addItem(null);
+                Aut.addItem(null);
                 gen.addItem(null);
             } 
         } catch (Exception e) {
@@ -409,7 +535,7 @@ public class AltEstoque extends javax.swing.JFrame {
     }
 
     private void Remover() {
-        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a remoção do usuário?",
+        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a remoção do livro?",
                 "Atenção", JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_OPTION) {
             String sql = "Delete From book WHERE id=?";
@@ -422,7 +548,7 @@ public class AltEstoque extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Remoção concluída!");
                     Idlivro.setText(null);
                     rnome.setText(null);
-                    rpreco.setText(null);
+                    Preco.setText(null);
                     runi.setText(null);
                 } else {
                     JOptionPane.showMessageDialog(null, "Erro");
@@ -435,8 +561,11 @@ public class AltEstoque extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Alteracao;
+    private javax.swing.JComboBox<String> Aut;
     private javax.swing.JButton Deletar;
+    private javax.swing.JComboBox<String> Edi;
     private javax.swing.JTextPane Idlivro;
+    private javax.swing.JTextField Preco;
     private javax.swing.JComboBox<String> gen;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -451,10 +580,7 @@ public class AltEstoque extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JComboBox<String> rautor;
-    private javax.swing.JComboBox<String> reditora;
     private javax.swing.JTextPane rnome;
-    private javax.swing.JTextField rpreco;
     private javax.swing.JTextPane runi;
     private javax.swing.JLabel runidade;
     // End of variables declaration//GEN-END:variables

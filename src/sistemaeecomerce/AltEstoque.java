@@ -30,6 +30,14 @@ public class AltEstoque extends javax.swing.JFrame {
      */
     ResultSet rs = null;
 
+    String selectedBookId;
+    
+    public void setSelectedBookId(String id) {
+        this.selectedBookId = id;
+        Idlivro.setText(this.selectedBookId);
+        Consultar();
+    }
+    
     public AltEstoque() {
         
         initComponents();

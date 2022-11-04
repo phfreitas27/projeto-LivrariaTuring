@@ -417,6 +417,8 @@ public class CadsEstoque extends javax.swing.JFrame {
         this.setVisible(false);
         AltEstoque alte = new AltEstoque();
         alte.setVisible(true);
+        int row = Tabela.getSelectedRow();
+        
     }//GEN-LAST:event_TabelaMouseClicked
 
     private void genActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genActionPerformed

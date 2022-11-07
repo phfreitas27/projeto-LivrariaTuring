@@ -113,7 +113,53 @@ public class Usuario extends javax.swing.JFrame {
             
             if(i < arrL.size()) {
                 String nomes1 = arrL.get(i).get(1);
-                String precos1 = arrL.get(i).get(2);
+                String formatted = arrL.get(i).get(2);
+                String partOne = formatted.substring(0, formatted.length() - 3);
+                String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+                String combined = partOne + partTwo;
+                System.out.println(combined);
+                String plainText = combined;
+                formatted = "";
+                switch (plainText.length()) {
+                    case 0:
+                        formatted = "R$0,00";
+                        break;
+                    case 1:
+                        formatted = "R$0,0" + plainText;
+                        break;
+                    case 2:
+                        formatted = "R$0," + plainText;
+                        break;
+                    default:
+                        partOne = plainText.substring(0, plainText.length() - 2);
+                        partTwo = plainText.substring(plainText.length() - 2, plainText.length());
+                        int k = 0;
+                        boolean doSubtring = false;
+                        for (int j = 0; j < partOne.length(); j++) {
+
+                            if(Character.toString(partOne.charAt(j)).equals("0")) {
+                                doSubtring = true;
+                                k++;
+                            } else {
+                                if(doSubtring) {
+                                    partOne = partOne.substring(k);
+                                }
+                                break;
+                            }
+
+                            if(j == partOne.length() - 1) {
+                                if(doSubtring) {
+                                    partOne = partOne.substring(k - 1);
+                                }
+                                break;
+                            }
+
+                        }
+
+                        formatted = "R$" + partOne + "," + partTwo;
+                        break;
+                }
+                String precos1 = formatted;
                 String unidades1 = arrL.get(i).get(3);
                 String editoras1 = arrL.get(i).get(4);
                 String autores1 = arrL.get(i).get(5);

@@ -244,7 +244,7 @@ public class Query {
                 arr.add(new ArrayList());
                 arr.get(i).add(Integer.toString(rs.getInt("id")));
                 arr.get(i).add(rs.getString("name"));
-                arr.get(i).add(Double.toString(rs.getDouble("price")));
+                arr.get(i).add(rs.getString("price"));
                 arr.get(i).add(Integer.toString(rs.getInt("stock")));
                 arr.get(i).add(rs.getString("publisher"));
                 arr.get(i).add(rs.getString("author"));
@@ -474,7 +474,38 @@ public class Query {
         MySQL factory = new MySQL();
           
         //1: Definir o comando SQL
-        String sql = "SELECT * FROM cart WHERE id = ?";
+        String sql = "SELECT IdBook FROM cart WHERE id = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            int i = 0;
+            while(rs.next()) {
+                arr.add(pvPesquisarLivroId(rs.getString("IdBook")));
+                i++;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
+    
+    public ArrayList<ArrayList<String>> MostrarLivrosCarrinho(String Id) {
+        return pvMostrarLivrosCarrinho(Id);
+    }
+    
+    private double pvMostrarValorCarrinho(String Id) {
+        double valor = 0;
+        ArrayList<Double> arr = new ArrayList<>();
+        MySQL factory = new MySQL();
+          
+        //1: Definir o comando SQL
+        String sql = "SELECT IdBook FROM cart WHERE id = ?";
         try (Connection c = factory.obtemConexao()) {
             //3: Pré compila o comando
             PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -486,19 +517,23 @@ public class Query {
             int i = 0;
             while(rs.next()) {
                 
-                arr.add(pvPesquisarLivroId(rs.getString("IdBook")));
+                arr.add(pvPesquisarLivroValorId(rs.getString("IdBook")));
                 i++;
             }
             
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(arr);
-        return arr;
+        
+        for (int i = 0; i < arr.size(); i++) {
+            valor += arr.get(i);
+        }
+        
+        return valor;
     }
     
-    public ArrayList<ArrayList<String>> MostrarLivrosCarrinho(String Id) {
-        return pvMostrarLivrosCarrinho(Id);
+    public double MostrarValorCarrinho(String Id) {
+        return pvMostrarValorCarrinho(Id);
     }
     
     private ArrayList<String> pvPesquisarLivroId(String Id) {
@@ -519,7 +554,7 @@ public class Query {
             while(rs.next()) {
                 arr.add(Integer.toString(rs.getInt("id")));
                 arr.add(rs.getString("name"));
-                arr.add(Integer.toString(rs.getInt("price")));
+                arr.add(rs.getString("price"));
                 arr.add(Integer.toString(rs.getInt("stock")));
                 arr.add(rs.getString("publisher"));
                 arr.add(rs.getString("author"));
@@ -531,6 +566,28 @@ public class Query {
             e.printStackTrace();
         }
         return arr;
+    }
+    
+    private double pvPesquisarLivroValorId(String Id) {
+        MySQL factory = new MySQL();
+        double valor = 0.00;
+        //1: Definir o comando SQL
+        String sql = "SELECT price FROM book WHERE id = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            rs.next();
+            valor = rs.getDouble("price");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return valor;
     }
     
     public ArrayList<String> PesquisarLivroId(String Id) {

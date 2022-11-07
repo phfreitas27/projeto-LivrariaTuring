@@ -42,6 +42,11 @@ public class Carrinho extends Cliente{
         query.RemoverCarrinho(Id, IdLivro);
     }
     
+    public double AtualizarValor() {
+        this.valor = query.MostrarValorCarrinho(this.Id);
+        return this.valor;
+    }
+    
     public ArrayList<ArrayList<String>> verDetalhes(String Id){
         return query.MostrarLivrosCarrinho(Id);
     }

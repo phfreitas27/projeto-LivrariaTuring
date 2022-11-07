@@ -17,11 +17,61 @@ import sistemaeecomerce.Classes.Livro;
 public class CarrinhoTela extends javax.swing.JFrame {
     
     String IdUsuario;
-    
+    double valor;
     String Id;
     
     public void setIdUsuario(String IdUsuario) {
         this.IdUsuario = IdUsuario;
+    }
+    
+    private void atualizarValorTela() {
+        String formatted = Double.toString(this.valor);
+        String partOne = formatted.substring(0, formatted.length() - 3);
+        String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+        String combined = partOne + partTwo;
+        System.out.println(combined);
+        String plainText = combined;
+        formatted = "";
+        switch (plainText.length()) {
+            case 0:
+                formatted = "R$0,00";
+                break;
+            case 1:
+                formatted = "R$0,0" + plainText;
+                break;
+            case 2:
+                formatted = "R$0," + plainText;
+                break;
+            default:
+                partOne = plainText.substring(0, plainText.length() - 2);
+                partTwo = plainText.substring(plainText.length() - 2, plainText.length());
+                int k = 0;
+                boolean doSubtring = false;
+                for (int j = 0; j < partOne.length(); j++) {
+
+                    if(Character.toString(partOne.charAt(j)).equals("0")) {
+                        doSubtring = true;
+                        k++;
+                    } else {
+                        if(doSubtring) {
+                            partOne = partOne.substring(k);
+                        }
+                        break;
+                    }
+
+                    if(j == partOne.length() - 1) {
+                        if(doSubtring) {
+                            partOne = partOne.substring(k - 1);
+                        }
+                        break;
+                    }
+
+                }
+
+                formatted = "R$" + partOne + "," + partTwo;
+                break;
+        }
+        ValorTotal.setText(formatted);
     }
     
     public void atualizar() {
@@ -33,7 +83,13 @@ public class CarrinhoTela extends javax.swing.JFrame {
         javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
         
         Carrinho c = new Carrinho();
-
+        
+        c.setId(Id);
+        c.AtualizarValor();
+        
+        this.valor = c.getValor();
+        atualizarValorTela();
+        
         ArrayList<ArrayList<String>> arrL = c.verDetalhes(Id);
         
         for (int i = 0; i < lista.length; i++) {
@@ -41,15 +97,58 @@ public class CarrinhoTela extends javax.swing.JFrame {
             if(i < arrL.size()) {
                 
                 String nomes1 = arrL.get(i).get(1);
-                String precos1 = arrL.get(i).get(2);
+                String formatted = arrL.get(i).get(2);
+                String partOne = formatted.substring(0, formatted.length() - 3);
+                String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+                String combined = partOne + partTwo;
+                System.out.println(combined);
+                String plainText = combined;
+                formatted = "";
+                switch (plainText.length()) {
+                    case 0:
+                        formatted = "R$0,00";
+                        break;
+                    case 1:
+                        formatted = "R$0,0" + plainText;
+                        break;
+                    case 2:
+                        formatted = "R$0," + plainText;
+                        break;
+                    default:
+                        partOne = plainText.substring(0, plainText.length() - 2);
+                        partTwo = plainText.substring(plainText.length() - 2, plainText.length());
+                        int k = 0;
+                        boolean doSubtring = false;
+                        for (int j = 0; j < partOne.length(); j++) {
+
+                            if(Character.toString(partOne.charAt(j)).equals("0")) {
+                                doSubtring = true;
+                                k++;
+                            } else {
+                                if(doSubtring) {
+                                    partOne = partOne.substring(k);
+                                }
+                                break;
+                            }
+
+                            if(j == partOne.length() - 1) {
+                                if(doSubtring) {
+                                    partOne = partOne.substring(k - 1);
+                                }
+                                break;
+                            }
+
+                        }
+
+                        formatted = "R$" + partOne + "," + partTwo;
+                        break;
+                }
+                String precos1 = formatted;
                 String unidades1 = arrL.get(i).get(3);
                 String editoras1 = arrL.get(i).get(4);
                 String autores1 = arrL.get(i).get(5);
                 String generos1 = arrL.get(i).get(6);
                 
-                if(nomes1.length() > 15) {
-                    
-                }
                 
                 titulos[i].setText("<html><p style=\"width:120px\">"+nomes1+"</p></html>");
                 precos[i].setText(precos1);

@@ -6,6 +6,8 @@ package sistemaeecomerce;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +23,21 @@ public class Usuario extends javax.swing.JFrame {
    Query query = new Query();
    String IdUsuario;
    String IdCarrinho;
+   int pagina = 0;
+   
+   private void proximaPagina() {
+       this.pagina++;
+       AtualizarPagina();
+   }
+   
+   private void voltarPagina() {
+       if(this.pagina > 0) {
+           this.pagina--;
+       } else {
+           this.pagina = 0;
+       }
+       AtualizarPagina();
+   }
     
    public void setIdUsuario(String Id) {
        this.IdUsuario = Id;
@@ -47,12 +64,6 @@ public class Usuario extends javax.swing.JFrame {
         initComponents();
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
-        javax.swing.JPanel[] lista = {L1, L2, L3, L4, L5, L6, L7, L8};
-        javax.swing.JLabel[] titulos = {TituloL1, TituloL2, TituloL3, TituloL4, TituloL5, TituloL6, TituloL7, TituloL8};
-        javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
-        javax.swing.JTextField[] editoras = {EditoraL1, EditoraL2, EditoraL3, EditoraL4, EditoraL5, EditoraL6, EditoraL7, EditoraL8};
-        javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
-        javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
         
         ArrayList<String> generos2 = new ArrayList();
         
@@ -64,11 +75,39 @@ public class Usuario extends javax.swing.JFrame {
             gen.addItem(generos2.get(i));
         }
         
+        AtualizarPagina();
         
+    }
+    
+    private void AtualizarPagina() {
+        javax.swing.JPanel[] lista = {L1, L2, L3, L4, L5, L6, L7, L8};
+        javax.swing.JLabel[] titulos = {TituloL1, TituloL2, TituloL3, TituloL4, TituloL5, TituloL6, TituloL7, TituloL8};
+        javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
+        javax.swing.JTextField[] editoras = {EditoraL1, EditoraL2, EditoraL3, EditoraL4, EditoraL5, EditoraL6, EditoraL7, EditoraL8};
+        javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
+        javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
         
         Livro l = new Livro();
 
         ArrayList<ArrayList<String>> arrL = l.mostrarLivros();
+        
+        ArrayList<ArrayList<String>> arrL2 = new ArrayList<>();
+        try {
+            arrL.get(this.pagina * 8);
+            for (int i = this.pagina * 8; i < arrL.size(); i++) {
+                arrL2.add(arrL.get(i));
+            }
+            arrL.clear();
+            arrL = arrL2;
+        } catch (Exception e) {
+            if(this.pagina == 0) {
+                JOptionPane.showMessageDialog(null, "Nenhum livro no catálogo.");
+                return;
+            } else {
+                voltarPagina();
+                return;
+            }
+        }
         
         for (int i = 0; i < lista.length; i++) {
             
@@ -80,9 +119,7 @@ public class Usuario extends javax.swing.JFrame {
                 String autores1 = arrL.get(i).get(5);
                 String generos1 = arrL.get(i).get(6);
                 
-                if(nomes1.length() > 15) {
-                    
-                }
+                lista[i].setVisible(true);
                 
                 titulos[i].setText("<html><p style=\"width:120px\">"+nomes1+"</p></html>");
                 precos[i].setText(precos1);
@@ -95,8 +132,9 @@ public class Usuario extends javax.swing.JFrame {
             }  
         }
         
+    
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,6 +244,9 @@ public class Usuario extends javax.swing.JFrame {
         VerCadastro = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         gen = new javax.swing.JComboBox<>();
+        botaoProximaPag = new javax.swing.JButton();
+        botaoVoltarPag = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -974,6 +1015,22 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
+        botaoProximaPag.setText(">>");
+        botaoProximaPag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProximaPagActionPerformed(evt);
+            }
+        });
+
+        botaoVoltarPag.setText("<<");
+        botaoVoltarPag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarPagActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Filtrar:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -981,34 +1038,40 @@ public class Usuario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(389, 389, 389)
-                        .addComponent(Pesquisar))
+                        .addGap(211, 211, 211)
+                        .addComponent(Titulo))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(333, 333, 333)
-                        .addComponent(Titulo)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel2)
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(VerCadastro)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1)))
-                .addGap(98, 98, 98))
+                        .addGap(143, 143, 143)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(Pesquisar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addGap(15, 15, 15)
+                                .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(70, 70, 70)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addComponent(jLabel2)
+                                        .addGap(112, 112, 112)
+                                        .addComponent(jLabel3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(VerCadastro)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jButton1)))))))
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botaoVoltarPag)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoProximaPag)
+                .addGap(83, 83, 83))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -1021,9 +1084,7 @@ public class Usuario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -1032,11 +1093,22 @@ public class Usuario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(VerCadastro))))
-                .addGap(5, 5, 5)
-                .addComponent(Pesquisar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(Pesquisar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(gen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoProximaPag)
+                    .addComponent(botaoVoltarPag))
+                .addContainerGap())
         );
 
         pack();
@@ -1170,6 +1242,14 @@ public class Usuario extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void botaoProximaPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProximaPagActionPerformed
+        proximaPagina();
+    }//GEN-LAST:event_botaoProximaPagActionPerformed
+
+    private void botaoVoltarPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarPagActionPerformed
+        voltarPagina();
+    }//GEN-LAST:event_botaoVoltarPagActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1266,6 +1346,8 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel TituloL7;
     private javax.swing.JLabel TituloL8;
     private javax.swing.JButton VerCadastro;
+    private javax.swing.JButton botaoProximaPag;
+    private javax.swing.JButton botaoVoltarPag;
     private javax.swing.JComboBox<String> gen;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -1283,6 +1365,7 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;

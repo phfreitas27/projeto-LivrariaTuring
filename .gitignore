@@ -1,3 +1,4 @@
 
 src/sistemaeecomerce/Classes/MySQL.java
-build/classes/sistemaeecomerce/Classes/MySQL.class
+build/
+nbproject/private/private.properties

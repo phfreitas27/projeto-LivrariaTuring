@@ -499,8 +499,8 @@ public class Query {
         return pvMostrarLivrosCarrinho(Id);
     }
     
-    private double pvMostrarValorCarrinho(String Id) {
-        double valor = 0;
+    private String pvMostrarValorCarrinho(String Id) {
+        double valor = 0.00;
         ArrayList<Double> arr = new ArrayList<>();
         MySQL factory = new MySQL();
           
@@ -516,8 +516,7 @@ public class Query {
             //5: itera sobre o resultado
             int i = 0;
             while(rs.next()) {
-                
-                arr.add(pvPesquisarLivroValorId(rs.getString("IdBook")));
+                arr.add(Double.parseDouble(pvPesquisarLivroValorId(rs.getString("IdBook"))));
                 i++;
             }
             
@@ -529,10 +528,10 @@ public class Query {
             valor += arr.get(i);
         }
         
-        return valor;
+        return Double.toString(valor);
     }
     
-    public double MostrarValorCarrinho(String Id) {
+    public String MostrarValorCarrinho(String Id) {
         return pvMostrarValorCarrinho(Id);
     }
     
@@ -568,9 +567,9 @@ public class Query {
         return arr;
     }
     
-    private double pvPesquisarLivroValorId(String Id) {
+    private String pvPesquisarLivroValorId(String Id) {
         MySQL factory = new MySQL();
-        double valor = 0.00;
+        String valor = "";
         //1: Definir o comando SQL
         String sql = "SELECT price FROM book WHERE id = ?";
         try (Connection c = factory.obtemConexao()) {
@@ -582,7 +581,7 @@ public class Query {
             ResultSet rs = ps.executeQuery();
             //5: itera sobre o resultado
             rs.next();
-            valor = rs.getDouble("price");
+            valor = rs.getString("price");
             
         } catch (Exception e) {
             e.printStackTrace();

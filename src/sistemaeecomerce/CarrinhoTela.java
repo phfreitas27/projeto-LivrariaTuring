@@ -17,7 +17,7 @@ import sistemaeecomerce.Classes.Livro;
 public class CarrinhoTela extends javax.swing.JFrame {
     
     String IdUsuario;
-    double valor;
+    String valor;
     String Id;
     
     public void setIdUsuario(String IdUsuario) {
@@ -25,7 +25,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
     }
     
     private void atualizarValorTela() {
-        String formatted = Double.toString(this.valor);
+        String formatted = this.valor;
         String partOne = formatted.substring(0, formatted.length() - 3);
         String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
         String combined = partOne + partTwo;
@@ -101,7 +101,6 @@ public class CarrinhoTela extends javax.swing.JFrame {
                 String partOne = formatted.substring(0, formatted.length() - 3);
                 String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
                 String combined = partOne + partTwo;
-                System.out.println(combined);
                 String plainText = combined;
                 formatted = "";
                 switch (plainText.length()) {
@@ -1034,7 +1033,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );

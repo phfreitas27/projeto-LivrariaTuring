@@ -7,7 +7,7 @@ public class Carrinho extends Cliente{
     private Query query = new Query();
     private int quantidade;
     private String Id;
-    private double valor;
+    private String valor;
     private ArrayList<String> idLivros;
     
     public int getQuantidade() {
@@ -26,11 +26,11 @@ public class Carrinho extends Cliente{
         this.Id = Id;
     }
 
-    public double getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
     
@@ -42,7 +42,7 @@ public class Carrinho extends Cliente{
         query.RemoverCarrinho(Id, IdLivro);
     }
     
-    public double AtualizarValor() {
+    public String AtualizarValor() {
         this.valor = query.MostrarValorCarrinho(this.Id);
         return this.valor;
     }

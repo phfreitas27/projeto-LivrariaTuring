@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.UUID;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Livro;
@@ -23,6 +24,12 @@ public class Usuario extends javax.swing.JFrame {
     
    public void setIdUsuario(String Id) {
        this.IdUsuario = Id;
+       this.IdCarrinho = UUID.randomUUID().toString();
+   }
+   
+   public void setIdUsuario(String IdUsuario, String Id) {
+       this.IdUsuario = IdUsuario;
+       this.IdCarrinho = Id;
    }
    
    private void addCarrinho(String nome) {
@@ -31,6 +38,7 @@ public class Usuario extends javax.swing.JFrame {
        Carrinho c = new Carrinho();
        c.setId(this.IdCarrinho);
        c.AddCarrinho(Id, IdUsuario);
+       JOptionPane.showMessageDialog(null, "Livro adicionado ao carrinho!");
    }
     /**
      * Creates new form Usuario
@@ -46,17 +54,17 @@ public class Usuario extends javax.swing.JFrame {
         javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
         javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
         
-        this.IdCarrinho = UUID.randomUUID().toString();
-        
         ArrayList<String> generos2 = new ArrayList();
         
         generos2 = query.MostrarGeneros();
         
-        generos2.add("Todos");
+        generos2.add(0, "Todos");
         
         for (int i = 0; i < generos2.size(); i++) {
             gen.addItem(generos2.get(i));
         }
+        
+        
         
         Livro l = new Livro();
 
@@ -922,6 +930,11 @@ public class Usuario extends javax.swing.JFrame {
         jPanel1.add(L8, gridBagConstraints);
 
         jButton1.setText("Meu carrinho");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/comprar1.png"))); // NOI18N
 
@@ -1044,7 +1057,8 @@ public class Usuario extends javax.swing.JFrame {
         javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
         javax.swing.JTextField[] editoras = {EditoraL1, EditoraL2, EditoraL3, EditoraL4, EditoraL5, EditoraL6, EditoraL7, EditoraL8};
         javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
-
+        javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
+        
         ArrayList<ArrayList<String>> arrL = l.pesquisarLivros(BuscaLivro.getText());
         
         for (int i = 0; i < lista.length; i++) {
@@ -1055,6 +1069,7 @@ public class Usuario extends javax.swing.JFrame {
                 String unidades1 = arrL.get(i).get(3);
                 String editoras1 = arrL.get(i).get(4);
                 String autores1 = arrL.get(i).get(5);
+                String generos1 = arrL.get(i).get(6);
                 
                 if(nomes1.length() > 15) {
                     
@@ -1064,6 +1079,7 @@ public class Usuario extends javax.swing.JFrame {
                 precos[i].setText(precos1);
                 editoras[i].setText(editoras1);
                 autores[i].setText(autores1);
+                generos[i].setText(generos1);
                 
             } else {
                 lista[i].setVisible(false);
@@ -1115,17 +1131,20 @@ public class Usuario extends javax.swing.JFrame {
         javax.swing.JTextField[] precos = {PrecoL1, PrecoL2, PrecoL3, PrecoL4, PrecoL5, PrecoL6, PrecoL7, PrecoL8};
         javax.swing.JTextField[] editoras = {EditoraL1, EditoraL2, EditoraL3, EditoraL4, EditoraL5, EditoraL6, EditoraL7, EditoraL8};
         javax.swing.JTextField[] autores = {AutorL1, AutorL2, AutorL3, AutorL4, AutorL5, AutorL6, AutorL7, AutorL8};
-
+        javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
+        
         ArrayList<ArrayList<String>> arrL = gen.getSelectedItem().equals("Todos") ? l.mostrarLivros() :  l.pesquisarLivrosGenero((String) gen.getSelectedItem());
         
         for (int i = 0; i < lista.length; i++) {
             
             if(i < arrL.size()) {
+                lista[i].setVisible(true);
                 String nomes1 = arrL.get(i).get(1);
                 String precos1 = arrL.get(i).get(2);
                 String unidades1 = arrL.get(i).get(3);
                 String editoras1 = arrL.get(i).get(4);
                 String autores1 = arrL.get(i).get(5);
+                String generos1 = arrL.get(i).get(6);
                 
                 if(nomes1.length() > 15) {
                     
@@ -1135,12 +1154,21 @@ public class Usuario extends javax.swing.JFrame {
                 precos[i].setText(precos1);
                 editoras[i].setText(editoras1);
                 autores[i].setText(autores1);
+                generos[i].setText(generos1);
                 
             } else {
                 lista[i].setVisible(false);
             }  
         }
     }//GEN-LAST:event_genItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CarrinhoTela c = new CarrinhoTela();
+        c.setId(IdCarrinho);
+        c.setVisible(true);
+        this.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

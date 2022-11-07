@@ -160,6 +160,7 @@ public class Loginv2 extends javax.swing.JFrame {
                 AdminTela adm = new AdminTela();
                 adm.setLocationRelativeTo(null);
                 adm.setVisible(true);
+                dispose();
             } else {
                 System.out.println("Usuario conectado");
                 setVisible(false);
@@ -167,6 +168,7 @@ public class Loginv2 extends javax.swing.JFrame {
                 usuario.setIdUsuario(usuario2.getText());
                 usuario.setLocationRelativeTo(null);
                 usuario.setVisible(true);
+                dispose();
             }
         }   else {
             System.out.println("Dados incorretos");

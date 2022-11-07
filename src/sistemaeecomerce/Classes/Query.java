@@ -66,7 +66,7 @@ public class Query {
     
     private boolean pvUsuarioExiste (String loginIns) {
         //1: Definir o comando SQL
-        String sql = "SELECT EXISTS(SELECT * FROM biblioteca.user WHERE login = ?);";
+        String sql = "SELECT EXISTS(SELECT * FROM user WHERE login = ?);";
         //2: Abrir uma conexão
         MySQL factory = new MySQL();
         try (Connection c = factory.obtemConexao()) {
@@ -93,7 +93,7 @@ public class Query {
     private String[] pvLogar(String loginIns) {
         String[] resultado = new String[2];
         //1: Definir o comando SQL
-        String sql = "SELECT login, password FROM biblioteca.user WHERE login = ?";
+        String sql = "SELECT login, password FROM user WHERE login = ?";
         //2: Abrir uma conexão
         MySQL factory = new MySQL();
         try (Connection c = factory.obtemConexao()) {
@@ -130,7 +130,7 @@ public class Query {
         MySQL factory = new MySQL();
         String Id = "";
         //1: Definir o comando SQL
-        String sql = "SELECT * FROM biblioteca.book WHERE name = ?";
+        String sql = "SELECT * FROM book WHERE name = ?";
         try (Connection c = factory.obtemConexao()) {
             //3: Pré compila o comando
             PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -157,7 +157,7 @@ public class Query {
         MySQL factory = new MySQL();
           
         //1: Definir o comando SQL
-        String sql = "SELECT * FROM biblioteca.book WHERE name LIKE ?";
+        String sql = "SELECT * FROM book WHERE name LIKE ?";
         try (Connection c = factory.obtemConexao()) {
             //3: Pré compila o comando
             PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -194,7 +194,7 @@ public class Query {
         MySQL factory = new MySQL();
           
         //1: Definir o comando SQL
-        String sql = "SELECT * FROM biblioteca.book WHERE genero = ?";
+        String sql = "SELECT * FROM book WHERE genero = ?";
         try (Connection c = factory.obtemConexao()) {
             //3: Pré compila o comando
             PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -231,7 +231,7 @@ public class Query {
         MySQL factory = new MySQL();
           
         //1: Definir o comando SQL
-        String sql = "SELECT * FROM biblioteca.book";
+        String sql = "SELECT * FROM book";
         try (Connection c = factory.obtemConexao()) {
             //3: Pré compila o comando
             PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -284,7 +284,7 @@ public class Query {
             }
             
             //1: Definir o comando SQL
-        String sql2 = "SELECT id FROM biblioteca.book WHERE name = ? AND publisher = ? AND author = ?;";
+        String sql2 = "SELECT id FROM book WHERE name = ? AND publisher = ? AND author = ?;";
         try (Connection c = factory.obtemConexao()) {
             //3: Pré compila o comando
             PreparedStatement ps = c.prepareStatement(sql2, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -334,7 +334,7 @@ public class Query {
     
     private boolean pvChecarAdmin(String loginIns) {
         //1: Definir o comando SQL
-        String sql = "SELECT login FROM biblioteca.admin WHERE login = ?";
+        String sql = "SELECT login FROM admin WHERE login = ?";
         //2: Abrir uma conexão
         MySQL factory = new MySQL();
         try (Connection c = factory.obtemConexao()) {
@@ -404,5 +404,178 @@ public class Query {
     
     public ArrayList<String> MostrarGeneros() {
         return pvMostrarGeneros();
+    }
+    
+    private ArrayList<String> pvMostrarAutores() {
+        ArrayList arr = new ArrayList();
+        String sql1 = "select * from rautor";
+        MySQL factory = new MySQL();
+        try (Connection c = factory.obtemConexao()){
+             PreparedStatement ps = c.prepareStatement(sql1);
+             ResultSet rs = ps.executeQuery();
+             int i = 0;
+             while(rs.next()){
+             arr.add(rs.getString(2));
+             }
+        } catch (Exception e ){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return arr;
+    }
+    
+    public ArrayList<String> MostrarAutores() {
+        return pvMostrarAutores();
+    }
+    
+    private ArrayList<String> pvMostrarEditoras() {
+        ArrayList arr = new ArrayList();
+        String sql1 = "select * from reditora";
+        MySQL factory = new MySQL();
+        try (Connection c = factory.obtemConexao()){
+             PreparedStatement ps = c.prepareStatement(sql1);
+             ResultSet rs = ps.executeQuery();
+             int i = 0;
+             while(rs.next()){
+             arr.add(rs.getString(2));
+             }
+        } catch (Exception e ){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return arr;
+    }
+    
+    public ArrayList<String> MostrarEditoras() {
+        return pvMostrarEditoras();
+    }
+    
+    private void pvRemoverCarrinho(String Id, String IdLivro) {
+        //1: Definir o comando SQL
+            String sql = "DELETE FROM cart WHERE id = ? AND idBook = ?";
+            //2: Abrir uma conexão
+            MySQL factory = new MySQL();
+            try (Connection c = factory.obtemConexao()) {
+                //3: Pré compila o comando
+                PreparedStatement ps = c.prepareStatement(sql);
+                //4: Preenche os dados faltantes
+                ps.setString(1, Id);
+                ps.setString(2, IdLivro);
+                //5: Executa o comando
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+    public void RemoverCarrinho(String Id, String IdLivro) {
+          pvRemoverCarrinho(Id, IdLivro);
+    }
+    
+    private ArrayList<ArrayList<String>> pvMostrarLivrosCarrinho(String Id) {
+        ArrayList<ArrayList<String>> arr = new ArrayList<>();
+        MySQL factory = new MySQL();
+          
+        //1: Definir o comando SQL
+        String sql = "SELECT * FROM cart WHERE id = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            int i = 0;
+            while(rs.next()) {
+                
+                arr.add(pvPesquisarLivroId(rs.getString("IdBook")));
+                i++;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(arr);
+        return arr;
+    }
+    
+    public ArrayList<ArrayList<String>> MostrarLivrosCarrinho(String Id) {
+        return pvMostrarLivrosCarrinho(Id);
+    }
+    
+    private ArrayList<String> pvPesquisarLivroId(String Id) {
+        ArrayList<String> arr = new ArrayList();
+        MySQL factory = new MySQL();
+          
+        //1: Definir o comando SQL
+        String sql = "SELECT * FROM book WHERE id = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            int i = 0;
+            while(rs.next()) {
+                arr.add(Integer.toString(rs.getInt("id")));
+                arr.add(rs.getString("name"));
+                arr.add(Integer.toString(rs.getInt("price")));
+                arr.add(Integer.toString(rs.getInt("stock")));
+                arr.add(rs.getString("publisher"));
+                arr.add(rs.getString("author"));
+                arr.add(rs.getString("genero"));
+                i++;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
+    
+    public ArrayList<String> PesquisarLivroId(String Id) {
+        return pvPesquisarLivroId(Id);
+    }
+    
+    private void pvAdicionarAutor(String nome) {
+        //1: Definir o comando SQL
+            String sql = "INSERT INTO `rautor`(`autor`) VALUES (?)";
+            //2: Abrir uma conexão
+            MySQL factory = new MySQL();
+            try (Connection c = factory.obtemConexao()) {
+                //3: Pré compila o comando
+                PreparedStatement ps = c.prepareStatement(sql);
+                //4: Preenche os dados faltantes
+                ps.setString(1, nome);
+                //5: Executa o comando
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+    
+    public void AdicionarAutor(String nome) {
+        pvAdicionarAutor(nome);
+    }
+    
+    private void pvAdicionarEditora(String nome) {
+        //1: Definir o comando SQL
+            String sql = "INSERT INTO `reditora`(`editora`) VALUES (?)";
+            //2: Abrir uma conexão
+            MySQL factory = new MySQL();
+            try (Connection c = factory.obtemConexao()) {
+                //3: Pré compila o comando
+                PreparedStatement ps = c.prepareStatement(sql);
+                //4: Preenche os dados faltantes
+                ps.setString(1, nome);
+                //5: Executa o comando
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+    
+    public void AdicionarEditora(String nome) {
+        pvAdicionarEditora(nome);
     }
 }

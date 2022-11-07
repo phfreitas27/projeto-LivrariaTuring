@@ -189,7 +189,7 @@ public class Cadastro extends javax.swing.JFrame {
         Loginv2 log = new Loginv2();
         log.setLocationRelativeTo(null);
         log.setVisible(true);
-        
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

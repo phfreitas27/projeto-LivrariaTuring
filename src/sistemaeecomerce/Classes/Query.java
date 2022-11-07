@@ -255,7 +255,6 @@ public class Query {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(arr);
         return arr;
     }
     

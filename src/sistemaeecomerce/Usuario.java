@@ -117,7 +117,6 @@ public class Usuario extends javax.swing.JFrame {
                 String partOne = formatted.substring(0, formatted.length() - 3);
                 String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
                 String combined = partOne + partTwo;
-                System.out.println(combined);
                 String plainText = combined;
                 formatted = "";
                 switch (plainText.length()) {

@@ -54,8 +54,12 @@ public class Usuario extends javax.swing.JFrame {
        String Id = l.getIdBd(nome);
        Carrinho c = new Carrinho();
        c.setId(this.IdCarrinho);
-       c.AddCarrinho(Id, IdUsuario);
-       JOptionPane.showMessageDialog(null, "Livro adicionado ao carrinho!");
+       if(c.ConsultarQuantidade(Id) <= l.ConsultarEstoque(Id)) {
+            c.AddCarrinho(Id, IdUsuario);
+            JOptionPane.showMessageDialog(null, "Livro adicionado ao carrinho!");
+       } else {
+           JOptionPane.showMessageDialog(null, "Livro não está em estoque!");
+       } 
    }
     /**
      * Creates new form Usuario

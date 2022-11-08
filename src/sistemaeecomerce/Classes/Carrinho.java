@@ -51,6 +51,14 @@ public class Carrinho extends Cliente{
         return query.MostrarLivrosCarrinho(Id);
     }
     
+    public int ConsultarQuantidade(String Id, String IdLivro) {
+        return query.ConsultarQuantidadeCarrinho(Id, IdLivro);
+    }
+    
+    public int ConsultarQuantidade(String IdLivro) {
+        return query.ConsultarQuantidadeCarrinho(this.Id, IdLivro);
+    }
+    
     public void ProsseguirCompra(){
         
     }

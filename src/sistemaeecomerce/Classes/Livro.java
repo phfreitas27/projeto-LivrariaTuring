@@ -1,8 +1,6 @@
 package sistemaeecomerce.Classes;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.util.ArrayList;
 
 public class Livro {
@@ -66,12 +64,14 @@ public class Livro {
         return this.editora;
     }
     
-    public void AddUnidade(){
-        this.unidade++;
+    public void AddUnidade(int quantidade){
+        this.unidade += quantidade;
+        query.AlterarLivroUnidade(Id, unidade);
     }
     
-    public void TakeUnidade(){
-        this.unidade--;
+    public void TakeUnidade(int quantidade){
+        this.unidade -= quantidade;
+        query.AlterarLivroUnidade(Id, unidade);
     }
      
     public void Inserir() {
@@ -95,6 +95,18 @@ public class Livro {
     public String getIdBd(String nome) {
         String id = query.PegarIdLivro(nome);
         return id;
+    }
+    
+    public boolean Alterar (String Id, String nome, String preco, String unidades, String editora, String autor, String genero) {
+        return query.AlterarLivro(Id, nome, preco, unidades, editora, autor, genero);
+    }
+    
+    public boolean Deletar (String Id) {
+        return query.DeletarLivro(Id);
+    }
+    
+    public int ConsultarEstoque(String Id) {
+        return query.ConsultarEstoque(Id);
     }
 
     public Livro(String nome, double preco, int unidade, String editora, String autor, String genero) {

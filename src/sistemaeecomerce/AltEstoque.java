@@ -515,54 +515,35 @@ public class AltEstoque extends javax.swing.JFrame {
                 combined = combined.replaceFirst("0", "");
             }
         }
-        String sql = "UPDATE book SET name=?, price=?, stock = ?, publisher=?, author=? ,genero=? WHERE id=?";
-        MySQL factory = new MySQL();
-        try ( Connection c = factory.obtemConexao()) {
-            PreparedStatement ps = c.prepareStatement(sql);
-            ps.setString(1, rnome.getText());
-            ps.setString(2, combined);
-            ps.setString(3, runi.getText());
-            ps.setString(4, (String)Edi.getSelectedItem());
-            ps.setString(5, (String) Aut.getSelectedItem());
-            ps.setString(7, Idlivro.getText());
-            ps.setString(6, (String) gen.getSelectedItem());
-            int adicionado = ps.executeUpdate();
-            if (adicionado > 0) {
-                JOptionPane.showMessageDialog(null, "Alteração concluída!");
-                Idlivro.setText(null);
-                rnome.setText(null);
-                Preco.setText(null);
-                runi.setText(null);
-                Edi.addItem(null);
-                Aut.addItem(null);
-                gen.addItem(null);
-            } 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        
+        Livro l = new Livro();
+        boolean success = l.Alterar(Idlivro.getText(), rnome.getText(), combined, runi.getText(), (String)Edi.getSelectedItem(), (String) Aut.getSelectedItem(), (String) gen.getSelectedItem());
+        
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Alteração concluída!");
+            Idlivro.setText(null);
+            rnome.setText(null);
+            Preco.setText(null);
+            runi.setText(null);
+            Edi.addItem(null);
+            Aut.addItem(null);
+            gen.addItem(null);
+        } 
     }
 
     private void Remover() {
         int confirma = JOptionPane.showConfirmDialog(null, "Confirma a remoção do livro?",
                 "Atenção", JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_OPTION) {
-            String sql = "Delete From book WHERE id=?";
-            MySQL factory = new MySQL();
-            try ( Connection c = factory.obtemConexao()) {
-                PreparedStatement ps = c.prepareStatement(sql);
-                ps.setString(1, Idlivro.getText());
-                int adicionado = ps.executeUpdate();
-                if (adicionado > 0) {
-                    JOptionPane.showMessageDialog(null, "Remoção concluída!");
-                    Idlivro.setText(null);
-                    rnome.setText(null);
-                    Preco.setText(null);
-                    runi.setText(null);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Erro");
-                }
-            } catch (Exception e) {
-                System.out.println(e);
+            Livro l = new Livro();
+            if (l.Deletar(Idlivro.getText())) {
+                JOptionPane.showMessageDialog(null, "Remoção concluída!");
+                Idlivro.setText(null);
+                rnome.setText(null);
+                Preco.setText(null);
+                runi.setText(null);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro");
             }
         }
     }

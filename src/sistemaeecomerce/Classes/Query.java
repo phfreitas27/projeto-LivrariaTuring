@@ -633,4 +633,123 @@ public class Query {
     public void AdicionarEditora(String nome) {
         pvAdicionarEditora(nome);
     }
+    
+    private boolean pvAlterarLivro(String id, String nome, String preco, String unidades, String editora, String autor, String genero) {
+        boolean success = false;
+        
+        String sql = "UPDATE book SET name=?, price=?, stock = ?, publisher=?, author=? ,genero=? WHERE id=?";
+        MySQL factory = new MySQL();
+        try ( Connection c = factory.obtemConexao()) {
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, nome);
+            ps.setString(2, preco);
+            ps.setString(3, unidades);
+            ps.setString(4, editora);
+            ps.setString(5, autor);
+            ps.setString(7, id);
+            ps.setString(6, genero);
+            int adicionado = ps.executeUpdate();
+            if (adicionado > 0) {
+                success = true;
+            } 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return success;
+    }
+    
+    public boolean AlterarLivro(String id, String nome, String preco, String unidades, String editora, String autor, String genero) {
+        return pvAlterarLivro(id, nome, preco, unidades, editora, autor, genero);
+    }
+    
+    private boolean pvDeletarLivro (String Id) {
+        String sql = "Delete From book WHERE id=?";
+        MySQL factory = new MySQL();
+        try ( Connection c = factory.obtemConexao()) {
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, Id);
+            int adicionado = ps.executeUpdate();
+            if (adicionado > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return false;
+    }
+    
+    public boolean DeletarLivro (String Id) {
+        return pvDeletarLivro(Id);
+    }
+    
+    private void pvAlterarLivroUnidade(String id, int unidades) {
+        String sql = "UPDATE book SET stock = ? WHERE id=?";
+        MySQL factory = new MySQL();
+        try ( Connection c = factory.obtemConexao()) {
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, Integer.toHexString(unidades));
+            ps.setString(2, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void AlterarLivroUnidade(String Id, int unidades) {
+        pvAlterarLivroUnidade(Id, unidades);
+    }
+    
+    private int pvConsultarEstoque(String Id) {
+        MySQL factory = new MySQL();
+        int quantidade = 0;
+        //1: Definir o comando SQL
+        String sql = "SELECT stock FROM book WHERE id = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            rs.next();
+            quantidade = rs.getInt("stock");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return quantidade;
+    }
+    
+    public int ConsultarEstoque(String Id) {
+        return pvConsultarEstoque(Id);
+    }
+    
+    private int pvConsultarQuantidadeCarrinho(String Id, String IdLivro) {
+        MySQL factory = new MySQL();
+        int quantidade = 0;
+        //1: Definir o comando SQL
+        String sql = "SELECT COUNT(id) FROM cart WHERE id = ? AND IdBook = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            ps.setString(2, IdLivro);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            rs.next();
+            quantidade = rs.getInt(1);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return quantidade;
+    }
+    
+    public int ConsultarQuantidadeCarrinho(String Id, String IdLivro) {
+        return pvConsultarQuantidadeCarrinho(Id, IdLivro);
+    }
 }

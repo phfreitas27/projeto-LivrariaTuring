@@ -483,9 +483,14 @@ public class Query {
             ResultSet rs = ps.executeQuery();
             //5: itera sobre o resultado
             int i = 0;
+            String lastId = "";
             while(rs.next()) {
-                arr.add(pvPesquisarLivroId(rs.getString("IdBook")));
-                i++;
+                if(!lastId.equals(rs.getString("IdBook"))) {
+                    lastId = rs.getString("IdBook");
+                    arr.add(pvPesquisarLivroId(rs.getString("IdBook")));
+                    arr.get(i).add(Integer.toString(pvConsultarQuantidadeCarrinho(Id, rs.getString("IdBook"))));
+                    i++;
+                }
             }
             
         } catch (Exception e) {
@@ -527,7 +532,18 @@ public class Query {
             valor += arr.get(i);
         }
         
-        return Double.toString(valor);
+        valor += 0.001;
+        String resultado = Double.toString(valor);
+        int ponto = 0;
+        for (int i = 0; i < resultado.length(); i++) {
+            if(resultado.charAt(i) == '.') {
+                ponto = i;
+            }
+        }
+        
+        resultado = resultado.substring(0, ponto + 3);
+        
+        return resultado;
     }
     
     public String MostrarValorCarrinho(String Id) {

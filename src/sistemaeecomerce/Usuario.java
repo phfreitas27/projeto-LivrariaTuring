@@ -1165,6 +1165,9 @@ public class Usuario extends javax.swing.JFrame {
 
     private void VerCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerCadastroActionPerformed
         setVisible(false);
+        TelaUsuario tela = new TelaUsuario();
+        tela.setVisible(true);
+        tela.setIdUsuario(IdUsuario, IdCarrinho);
     }//GEN-LAST:event_VerCadastroActionPerformed
 
     private void PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PesquisarActionPerformed
@@ -1286,6 +1289,7 @@ public class Usuario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CarrinhoTela c = new CarrinhoTela();
         c.setId(IdCarrinho);
+        c.setIdUsuario(IdUsuario);
         c.setVisible(true);
         this.setVisible(false);
         dispose();

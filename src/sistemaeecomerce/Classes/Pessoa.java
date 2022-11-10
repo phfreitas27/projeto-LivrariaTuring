@@ -56,11 +56,11 @@ public class Pessoa {
         return this.senha;
     }
 
-    public void inserir() {
+    public void inserir(String cep, String rua, String complemento, String estado, String cidade) {
         if(loginExists(this.login)) {
             System.out.println("Já existe um usuário com este login");
         } else {
-            query.InserirUsuario(this.login, this.senha, this.email, this.nome, this.idade);
+            query.InserirUsuario(this.login, this.senha, this.email, this.nome, this.idade, cep, rua, complemento, estado, cidade);
         }
     }
     

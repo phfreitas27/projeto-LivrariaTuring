@@ -1154,10 +1154,11 @@ public class CarrinhoTela extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         setVisible(false);
+        dispose();
         Usuario usuario = new Usuario();
         usuario.setLocationRelativeTo(null);
+        usuario.setIdUsuario(this.IdUsuario, Id);
         usuario.setVisible(true);
-        usuario.setIdUsuario(IdUsuario, Id);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CarrinhoL1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL1ActionPerformed

@@ -306,9 +306,9 @@ public class Query {
         return pvInserirLivro(nome, autor, editora, preco, unidade, genero);
     }
     
-    private void pvInserirUsuario(String login, String senha, String email, String nome, int idade) {
+    private void pvInserirUsuario(String login, String senha, String email, String nome, int idade, String cep, String rua, String complemento, String estado, String cidade) {
         //1: Definir o comando SQL
-            String sql = "INSERT INTO user(login, password, email, nome, idade) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user(login, password, email, nome, idade, cep, rua, complemento, estado, cidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             //2: Abrir uma conexão
             MySQL factory = new MySQL();
             try (Connection c = factory.obtemConexao()) {
@@ -320,6 +320,11 @@ public class Query {
                 ps.setString(3, email);
                 ps.setString(4, nome);
                 ps.setInt(5, idade);
+                ps.setString(6, cep);
+                ps.setString(7, rua);
+                ps.setString(8, complemento);
+                ps.setString(9, estado);
+                ps.setString(10, cidade);
                 //5: Executa o comando
                 ps.execute();
             } catch (Exception e) {
@@ -327,8 +332,8 @@ public class Query {
             }
     }
     
-    public void InserirUsuario(String login, String senha, String email, String nome, int idade) {
-        pvInserirUsuario(login, senha, email, nome, idade);
+    public void InserirUsuario(String login, String senha, String email, String nome, int idade, String cep, String rua, String complemento, String estado, String cidade) {
+        pvInserirUsuario(login, senha, email, nome, idade, cep, rua, complemento, estado, cidade);
     }
     
     private boolean pvChecarAdmin(String loginIns) {
@@ -767,5 +772,39 @@ public class Query {
     
     public int ConsultarQuantidadeCarrinho(String Id, String IdLivro) {
         return pvConsultarQuantidadeCarrinho(Id, IdLivro);
+    }
+    
+    private ArrayList<String> pvConsultarCep(String cep) {
+        MySQL factory = new MySQL();
+        ArrayList<String> informacoes = new ArrayList<>();
+        //1: Definir o comando SQL
+        String sql = "SELECT * FROM logradouro WHERE CEP = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, cep);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            if(rs.next()) {
+                informacoes.add(rs.getString("descricao")); //rua
+                informacoes.add(rs.getString("complemento"));
+                informacoes.add(rs.getString("UF"));
+                informacoes.add(rs.getString("descricao_cidade"));
+                informacoes.add(rs.getString("descricao_bairro"));
+            } else {
+                JOptionPane.showMessageDialog(null, "CEP não encontrado!");
+                informacoes.add("Invalido");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return informacoes;
+    }
+    
+    public ArrayList<String> ConsultarCep(String cep) {
+        return pvConsultarCep(cep);
     }
 }

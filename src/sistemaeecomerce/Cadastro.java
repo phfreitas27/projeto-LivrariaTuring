@@ -55,8 +55,8 @@ public class Cadastro extends javax.swing.JFrame {
         complemento = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         cidade = new javax.swing.JTextField();
-        estado = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        estado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,6 +116,8 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
 
+        estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,7 +163,7 @@ public class Cadastro extends javax.swing.JFrame {
                                                         .addComponent(jLabel10)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(rua, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                                                            .addComponent(rua)
                                                             .addComponent(cep)))
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(jLabel9)
@@ -176,7 +178,7 @@ public class Cadastro extends javax.swing.JFrame {
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(jLabel11)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(estado))
+                                                        .addComponent(estado, 0, 225, Short.MAX_VALUE))
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(jLabel12)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -232,8 +234,8 @@ public class Cadastro extends javax.swing.JFrame {
                             .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
+                            .addComponent(jLabel11)
+                            .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
@@ -271,7 +273,7 @@ public class Cadastro extends javax.swing.JFrame {
         p.setNome(n);
         p.setIdade(i);
         
-        p.inserir(this.cep.getText(), this.rua.getText(), this.complemento.getText(), this.estado.getText(), this.cidade.getText());
+        p.inserir(this.cep.getText(), this.rua.getText(), this.complemento.getText(), this.estado.getSelectedItem().toString(), this.cidade.getText());
         
         JOptionPane.showMessageDialog(null, "Cadastro Concluído!");
         System.out.println("Nome: " + n);
@@ -294,7 +296,7 @@ public class Cadastro extends javax.swing.JFrame {
         if(e.pesquisarCep(cep.getText())) {
             this.rua.setText(e.getRua());
             this.complemento.setText(e.getComplemento());
-            this.estado.setText(e.getEstado());
+            this.estado.setSelectedItem(e.getEstado());
             this.estado.setEditable(false);
             this.cidade.setText(e.getCidade());
             this.cidade.setEditable(false);
@@ -341,7 +343,7 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JTextField cidade;
     private javax.swing.JTextField complemento;
     private javax.swing.JTextField email;
-    private javax.swing.JTextField estado;
+    private javax.swing.JComboBox<String> estado;
     private javax.swing.JTextField idade;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

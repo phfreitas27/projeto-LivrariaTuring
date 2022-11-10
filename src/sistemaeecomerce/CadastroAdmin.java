@@ -192,7 +192,7 @@ public class CadastroAdmin extends javax.swing.JFrame {
         AdminTela backadm = new AdminTela();
         backadm.setLocationRelativeTo(null);
         backadm.setVisible(true);
-        
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

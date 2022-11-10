@@ -52,7 +52,7 @@ public class Catalogo extends Livro{
             } else{
                 JOptionPane.showMessageDialog(null, "Erro!!!, Tente novamente");
             }
-            }
-                
-            }
         }
+                
+    }
+}

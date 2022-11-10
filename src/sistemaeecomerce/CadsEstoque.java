@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import sistemaeecomerce.Classes.Livro;
 import sistemaeecomerce.Classes.MySQL;
 import java.sql.ResultSet;
+import sistemaeecomerce.Classes.Query;
 
 
 /**
@@ -31,43 +32,30 @@ public class CadsEstoque extends javax.swing.JFrame {
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
         
+        Query query = new Query();
         
-        String sql1 = "select * from rgenero";
-        MySQL factory = new MySQL();
-        try (Connection c = factory.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql1);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             gen.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
+        ArrayList<String> generos1 = new ArrayList();
+        
+        generos1 = query.MostrarGeneros();
+        
+        for (int i = 0; i < generos1.size(); i++) {
+            gen.addItem(generos1.get(i));
         }
         
-        String sql2 = "select * from rautor";
-        MySQL factory1 = new MySQL();
-        try (Connection c = factory1.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql2);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             Aut.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
+        ArrayList<String> autores1 = new ArrayList();
+        
+        autores1 = query.MostrarAutores();
+        
+        for (int i = 0; i < autores1.size(); i++) {
+            Aut.addItem(autores1.get(i));
         }
-        String sql3 = "select * from reditora";
-        MySQL factory2 = new MySQL();
-        try (Connection c = factory2.obtemConexao()){
-             PreparedStatement ps = c.prepareStatement(sql3);
-             rs = ps.executeQuery();
-             int i = 0;
-             while(rs.next()){
-             Edi.addItem(rs.getString(2));
-             }
-        } catch (Exception e ){
-            JOptionPane.showMessageDialog(null, e);
+        
+        ArrayList<String> editoras1 = new ArrayList();
+        
+        editoras1 = query.MostrarEditoras();
+        
+        for (int i = 0; i < editoras1.size(); i++) {
+            Edi.addItem(editoras1.get(i));
         }
         
         Livro l = new Livro();
@@ -116,9 +104,16 @@ public class CadsEstoque extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Aut = new javax.swing.JComboBox<>();
         Edi = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        nome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nomeKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(nome);
 
         Preco.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -189,9 +184,34 @@ public class CadsEstoque extends javax.swing.JFrame {
 
         jLabel2.setText("Genero");
 
+        Aut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AutMouseClicked(evt);
+            }
+        });
+
+        Edi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EdiMouseClicked(evt);
+            }
+        });
         Edi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EdiActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("+");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("+");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -202,35 +222,36 @@ public class CadsEstoque extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3))
-                                .addGap(63, 63, 63)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(gen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Aut, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Edi, 0, 180, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addComponent(jLabel1))))
+                        .addGap(195, 195, 195)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(259, 259, 259)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(63, 63, 63)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(gen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Aut, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Edi, 0, 180, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addComponent(jButton3))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -256,11 +277,13 @@ public class CadsEstoque extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Edi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Aut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gen, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -276,31 +299,47 @@ public class CadsEstoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+       if(Preco.getText().length() > 0) {
+            String formatted = Preco.getText();
 
+            String partOne = formatted.substring(2, formatted.length() - 3);
+            String partTwo = formatted.substring(formatted.length() - 2, formatted.length());
+            String combined = partOne + "." + partTwo;
+            
+            while(combined.length() != 0 && combined.charAt(0) == '0') {
+                combined = combined.replaceFirst("0", "");
+            }
+            
+            Preco.setText(combined);
+            
+        }
+        
        String nomes = nome.getText().trim();
        String precos = Preco.getText().trim();
        String unidades = Uni.getText().trim();
        String editoras = Edi.getSelectedItem().toString();
        String autores = Aut.getSelectedItem().toString();
        String genero = gen.getSelectedItem().toString();
+       
        try {
-           Double.parseDouble(Preco.getText());
-       } catch (Exception e) {
-           JOptionPane.showMessageDialog(null, "O preço deve ser um número!");
-       }
+            Double.parseDouble(Preco.getText());
+            Livro l = new Livro(nomes, Double.parseDouble(precos), Integer.parseInt(unidades), editoras, autores, genero);
        
-       Livro l = new Livro(nomes, Double.parseDouble(precos), Integer.parseInt(unidades), editoras, autores, genero);
-       
-       l.Inserir();
-       
-       String IDs = l.getId();
-       
-       DefaultTableModel val = (DefaultTableModel) Tabela.getModel();
-       val.addRow(new String[]{IDs, nomes, precos, unidades, editoras, autores, genero});
+            l.Inserir();
 
-       nome.setText("");
-       Preco.setText("");
-       Uni.setText("");
+            String IDs = l.getId();
+
+            DefaultTableModel val = (DefaultTableModel) Tabela.getModel();
+            val.addRow(new String[]{IDs, nomes, precos, unidades, editoras, autores, genero});
+
+            nome.setText("");
+            Preco.setText("");
+            Uni.setText("");
+       } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "O preço deve ser um número!");
+       }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void PrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PrecoKeyTyped
@@ -325,18 +364,11 @@ public class CadsEstoque extends javax.swing.JFrame {
             
             Preco.setText(combined);
             
-           /* if(Integer.parseInt(combined) == 0) {
-                Preco.setText("");
-            } else {
-                Preco.setText(combined);
-            }
-            */
-            
         }
     }//GEN-LAST:event_PrecoFocusGained
 
     private void PrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PrecoFocusLost
-      /*  String plainText = Preco.getText();
+        String plainText = Preco.getText();
         String formatted = "";
         switch (plainText.length()) {
             case 0:
@@ -379,13 +411,14 @@ public class CadsEstoque extends javax.swing.JFrame {
         }
         
         Preco.setText(formatted);
-        */
     }//GEN-LAST:event_PrecoFocusLost
 
     private void TabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaMouseClicked
         this.setVisible(false);
         AltEstoque alte = new AltEstoque();
         alte.setVisible(true);
+        int row = Tabela.getSelectedRow();
+        
     }//GEN-LAST:event_TabelaMouseClicked
 
     private void genActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genActionPerformed
@@ -395,6 +428,46 @@ public class CadsEstoque extends javax.swing.JFrame {
     private void EdiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EdiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_EdiActionPerformed
+
+    private void nomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeKeyTyped
+        if(nome.getText().length() >= 65) {
+            evt.setKeyChar('\b');
+        }
+    }//GEN-LAST:event_nomeKeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        CadsAutor CadsAutor = new CadsAutor();
+        CadsAutor.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void AutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AutMouseClicked
+        ArrayList<String> autores = new ArrayList();
+        
+        Query query = new Query();
+        
+        autores = query.MostrarAutores();
+        Aut.removeAllItems();
+        for (int i = 0; i < autores.size(); i++) {
+            Aut.addItem(autores.get(i));
+        }
+    }//GEN-LAST:event_AutMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        CadsEditora CadsEditora = new CadsEditora();
+        CadsEditora.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void EdiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EdiMouseClicked
+        ArrayList<String> editoras = new ArrayList();
+        
+        Query query = new Query();
+        
+        editoras = query.MostrarEditoras();
+        Edi.removeAllItems();
+        for (int i = 0; i < editoras.size(); i++) {
+            Edi.addItem(editoras.get(i));
+        }
+    }//GEN-LAST:event_EdiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -442,6 +515,8 @@ public class CadsEstoque extends javax.swing.JFrame {
     private javax.swing.JTextPane Uni;
     private javax.swing.JComboBox<String> gen;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

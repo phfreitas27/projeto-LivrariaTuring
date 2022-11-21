@@ -897,4 +897,85 @@ public class Query {
     public ArrayList<String> ConsultarEndereco(String Id) {
         return pvConsultarEndereco(Id);
     }
+    
+    private double pvConsultarValorVendas() {
+        MySQL factory = new MySQL();
+        double valor = 0.00;
+        //1: Definir o comando SQL
+        String sql = "SELECT SUM(value) as TotalValue FROM sales";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            rs.next();
+            valor = rs.getDouble(1);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return valor;
+    }
+    
+    public double ConsultarValorVendas() {
+        return pvConsultarValorVendas();
+    }
+    
+    private ArrayList<ArrayList<String>> pvConsultarVendas() {
+        MySQL factory = new MySQL();
+        ArrayList<ArrayList<String>> resultado = new ArrayList();
+        //1: Definir o comando SQL
+        String sql = "SELECT * FROM sales";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            int i = 0;
+            while(rs.next()) {
+                resultado.add(new ArrayList<String>());
+                resultado.get(i).add(rs.getString("idUser"));
+                resultado.get(i).add(rs.getString("idBook"));
+                resultado.get(i).add(rs.getString("value"));
+                i++;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultado;
+    }
+    
+    public ArrayList<ArrayList<String>> ConsultarVendas() {
+        return pvConsultarVendas();
+    }
+    
+    private int pvConsultarQuantidadeVendas() {
+        MySQL factory = new MySQL();
+        int valor = 0;
+        //1: Definir o comando SQL
+        String sql = "SELECT COUNT(idBook) as TotalValue FROM sales";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            rs.next();
+            valor = rs.getInt(1);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return valor;
+    }
+    
+    public int ConsultarQuantidadeVendas() {
+        return pvConsultarQuantidadeVendas();
+    }
 }

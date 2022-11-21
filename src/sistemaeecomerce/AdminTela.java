@@ -38,6 +38,8 @@ public class AdminTela extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        relatorio = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -49,7 +51,7 @@ public class AdminTela extends javax.swing.JFrame {
         jLabel2.setText("Clique na opção que deseja:");
 
         novoadm.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        novoadm.setText("Cadastar novos adm");
+        novoadm.setText("Cadastar novos Admins");
         novoadm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 novoadmActionPerformed(evt);
@@ -65,7 +67,7 @@ public class AdminTela extends javax.swing.JFrame {
         });
 
         deleteadm.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        deleteadm.setText("Remover adm");
+        deleteadm.setText("Remover Admin");
         deleteadm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteadmActionPerformed(evt);
@@ -77,6 +79,16 @@ public class AdminTela extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/remover22.png"))); // NOI18N
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/estoque1.png"))); // NOI18N
+
+        relatorio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        relatorio.setText("Relatório de vendas");
+        relatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                relatorioActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistemaeecomerce/Imagens/Relatorio.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,26 +104,30 @@ public class AdminTela extends javax.swing.JFrame {
                         .addGap(161, 161, 161)
                         .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addGap(158, 158, 158)
                         .addComponent(jLabel4)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deleteadm, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(novoadm, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                                    .addComponent(estoques, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(161, 161, 161)
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(123, 123, 123)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(91, 91, 91)
+                            .addComponent(novoadm, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(estoques, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(deleteadm, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(relatorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel6)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -127,38 +143,51 @@ public class AdminTela extends javax.swing.JFrame {
                 .addComponent(novoadm)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(estoques)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteadm)
-                .addGap(16, 16, 16))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(relatorio)
+                .addGap(39, 39, 39))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void novoadmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoadmActionPerformed
-       setVisible(false);
+
        CadastroAdmin cadadm = new CadastroAdmin();
        cadadm.setVisible(true);
        cadadm.setLocationRelativeTo(null);
+       dispose();
     }//GEN-LAST:event_novoadmActionPerformed
 
     private void deleteadmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteadmActionPerformed
-        setVisible(false);
+
        RemoverAdm remadm = new RemoverAdm();
        remadm.setVisible(true);
        remadm.setLocationRelativeTo(null);
+       dispose();
     }//GEN-LAST:event_deleteadmActionPerformed
 
     private void estoquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoquesActionPerformed
-        setVisible(false);
+
         CadsEstoque cadest = new CadsEstoque();
         cadest.setVisible(true);
         cadest.setLocationRelativeTo(null);
+        dispose();
     }//GEN-LAST:event_estoquesActionPerformed
+
+    private void relatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioActionPerformed
+        RelatorioVendas relat = new RelatorioVendas();
+        relat.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_relatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,6 +233,8 @@ public class AdminTela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JButton novoadm;
+    private javax.swing.JButton relatorio;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,7 +29,7 @@ public class Livro {
         this.autor = autor;
     }
    
-    private void setId(String Id){
+    public void setId(String Id){
        this.Id = Id;
     }
     public String getId(){
@@ -45,10 +45,10 @@ public class Livro {
 
     public void setpreco(double preco){
         this.preco = preco;
-}
+    }
     public double getpreco(){
-    return this.preco;
-}
+        return this.preco;
+    }
 
     public void setunidade(int unidade){
         this.unidade = unidade;
@@ -65,12 +65,19 @@ public class Livro {
     }
     
     public void AddUnidade(int quantidade){
+        this.unidade = ConsultarEstoque(Id);
         this.unidade += quantidade;
         query.AlterarLivroUnidade(Id, unidade);
     }
     
     public void TakeUnidade(int quantidade){
+        this.unidade = ConsultarEstoque(Id);
         this.unidade -= quantidade;
+        query.AlterarLivroUnidade(Id, unidade);
+    }
+    
+    public void TakeUnidade(int quantidade, String Id){
+        this.unidade = ConsultarEstoque(Id);
         query.AlterarLivroUnidade(Id, unidade);
     }
      

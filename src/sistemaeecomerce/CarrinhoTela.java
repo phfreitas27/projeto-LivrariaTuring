@@ -19,6 +19,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
     String IdUsuario;
     String valor;
     String Id;
+    ArrayList<String> LivrosNome = new ArrayList();
     
     public void setIdUsuario(String IdUsuario) {
         this.IdUsuario = IdUsuario;
@@ -150,6 +151,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
                 String quantidades1 = arrL.get(i).get(7);
                 
                 titulos[i].setText("<html><p style=\"width:120px\">"+nomes1+"</p></html>");
+                LivrosNome.add(nomes1 + " (" + quantidades1 + ")");
                 precos[i].setText(precos1);
                 editoras[i].setText(editoras1);
                 autores[i].setText(autores1);
@@ -1206,15 +1208,12 @@ public class CarrinhoTela extends javax.swing.JFrame {
     }//GEN-LAST:event_CarrinhoL8ActionPerformed
 
     private void FinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizarCompraActionPerformed
-        Carrinho c = new Carrinho();
-        
-        c.setId(Id);
-        
-        ArrayList<ArrayList<String>> arrL = c.verDetalhes(Id);
-        
-        for (int i = 0; i < arrL.size(); i++) {
-            
-        }
+        FinalizarCompra f = new FinalizarCompra();
+        f.setIds(this.Id, this.IdUsuario);
+        f.setValor(this.ValorTotal.getText());
+        f.setVisible(true);
+        f.setLivros(LivrosNome);
+        dispose();
     }//GEN-LAST:event_FinalizarCompraActionPerformed
 
     /**

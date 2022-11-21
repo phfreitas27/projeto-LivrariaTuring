@@ -49,11 +49,11 @@ public class Carrinho extends Cliente{
     
     public ArrayList<ArrayList<String>> verDetalhes(String Id){
         ArrayList<ArrayList<String>> arr = query.MostrarLivrosCarrinho(Id);
-        
+        ArrayList<String> result = new ArrayList();
         for (int i = 0; i < arr.size(); i++) {
-            this.idLivros.add(arr.get(i).get(0));
+            result.add(arr.get(i).get(0));
         }
-        
+        this.idLivros = result;
         return arr;
     }
     
@@ -65,9 +65,15 @@ public class Carrinho extends Cliente{
         return query.ConsultarQuantidadeCarrinho(this.Id, IdLivro);
     }
     
-    public void ProsseguirCompra(String idVenda){
+    public void ProsseguirCompra(String idVenda, String idUser){
+        Livro l = new Livro();
         for (int i = 0; i < this.idLivros.size(); i++) {
-            query.InserirVenda(Id, Id, Id, Id, i);
+            double valor = Double.parseDouble(query.PesquisarLivroValorId(this.idLivros.get(i)));
+            for (int j = 0; j < query.ConsultarQuantidadeCarrinho(this.Id, this.idLivros.get(i)); j++) {
+                query.InserirVenda(idVenda, idUser, this.Id, this.idLivros.get(i), valor);
+                l.setId(idLivros.get(i));
+                l.TakeUnidade(1);
+            }
         }
     }
     

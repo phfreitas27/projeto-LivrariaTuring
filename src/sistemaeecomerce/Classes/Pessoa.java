@@ -89,4 +89,8 @@ public class Pessoa {
     public boolean isAdmin(String loginIns) {
         return query.ChecarAdmin(loginIns);
     }
+    
+    public String getNomeById(String Id) {
+        return query.PesquisarNomeByIdUsuario(Id);
+    }
 }

@@ -609,6 +609,10 @@ public class Query {
         return valor;
     }
     
+    public String PesquisarLivroValorId(String Id) {
+        return pvPesquisarLivroValorId(Id);
+    }
+    
     public ArrayList<String> PesquisarLivroId(String Id) {
         return pvPesquisarLivroId(Id);
     }
@@ -709,7 +713,7 @@ public class Query {
         MySQL factory = new MySQL();
         try ( Connection c = factory.obtemConexao()) {
             PreparedStatement ps = c.prepareStatement(sql);
-            ps.setString(1, Integer.toHexString(unidades));
+            ps.setString(1, Integer.toString(unidades));
             ps.setString(2, id);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -810,7 +814,7 @@ public class Query {
     
         private void pvInserirVenda (String id, String idUser, String idCart, String idBook, double value) {
         //1: Definir o comando SQL
-            String sql = "INSERT INTO venda(id, idUser, idCart, idBook, value) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO sales(id, idUser, idCart, idBook, value) VALUES (?, ?, ?, ?, ?)";
             //2: Abrir uma conexão
             MySQL factory = new MySQL();
             try (Connection c = factory.obtemConexao()) {
@@ -831,5 +835,66 @@ public class Query {
     
     public void InserirVenda (String id, String idUser, String idCart, String idBook, double value) {
         pvInserirVenda(id, idUser, idCart, idBook, value);
+    }
+    
+    private String pvPesquisarNomeByIdUsuario(String Id) {
+        MySQL factory = new MySQL();
+        //1: Definir o comando SQL
+        String sql = "SELECT nome FROM user WHERE login = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            if(rs.next()) {
+                return rs.getString(1);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Erro!";
+        }
+        return "Erro!";
+    }
+    
+    public String PesquisarNomeByIdUsuario(String Id) {
+        return pvPesquisarNomeByIdUsuario(Id);
+    }
+    
+    private ArrayList<String> pvConsultarEndereco(String Id) {
+        MySQL factory = new MySQL();
+        ArrayList<String> informacoes = new ArrayList<>();
+        //1: Definir o comando SQL
+        String sql = "SELECT * FROM user WHERE login = ?";
+        try (Connection c = factory.obtemConexao()) {
+            //3: Pré compila o comando
+            PreparedStatement ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ps.setString(1, Id);
+            //4: Executa o comando e guarda
+            //o resultado em um ResultSet
+            ResultSet rs = ps.executeQuery();
+            //5: itera sobre o resultado
+            if(rs.next()) {
+                informacoes.add(rs.getString("rua"));
+                informacoes.add(rs.getString("complemento"));
+                informacoes.add(rs.getString("cidade"));
+                informacoes.add(rs.getString("estado"));
+                informacoes.add(rs.getString("cep"));
+            } else {
+                JOptionPane.showMessageDialog(null, "CEP não encontrado!");
+                informacoes.add("Invalido");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return informacoes;
+    }
+    
+    public ArrayList<String> ConsultarEndereco(String Id) {
+        return pvConsultarEndereco(Id);
     }
 }

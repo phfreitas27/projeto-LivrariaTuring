@@ -1299,8 +1299,8 @@ public class Usuario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CarrinhoTela c = new CarrinhoTela();
-        c.setId(IdCarrinho);
-        c.setIdUsuario(IdUsuario);
+        c.setId(this.IdCarrinho);
+        c.setIdUsuario(this.IdUsuario);
         c.setVisible(true);
         this.setVisible(false);
         dispose();

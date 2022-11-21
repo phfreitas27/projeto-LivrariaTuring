@@ -301,6 +301,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
         QuantidadeL8 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         ValorTotal = new javax.swing.JTextField();
+        FinalizarCompra = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1117,6 +1118,13 @@ public class CarrinhoTela extends javax.swing.JFrame {
         ValorTotal.setEditable(false);
         ValorTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
+        FinalizarCompra.setText("Finalizar compra");
+        FinalizarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FinalizarCompraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1132,6 +1140,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(FinalizarCompra)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -1145,7 +1155,9 @@ public class CarrinhoTela extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(FinalizarCompra))
                 .addContainerGap())
         );
 
@@ -1192,6 +1204,18 @@ public class CarrinhoTela extends javax.swing.JFrame {
     private void CarrinhoL8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarrinhoL8ActionPerformed
         remCarrinho(TituloL8.getText());
     }//GEN-LAST:event_CarrinhoL8ActionPerformed
+
+    private void FinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinalizarCompraActionPerformed
+        Carrinho c = new Carrinho();
+        
+        c.setId(Id);
+        
+        ArrayList<ArrayList<String>> arrL = c.verDetalhes(Id);
+        
+        for (int i = 0; i < arrL.size(); i++) {
+            
+        }
+    }//GEN-LAST:event_FinalizarCompraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1254,6 +1278,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
     private javax.swing.JTextField EditoraL6;
     private javax.swing.JTextField EditoraL7;
     private javax.swing.JTextField EditoraL8;
+    private javax.swing.JButton FinalizarCompra;
     private javax.swing.JTextField GeneroL1;
     private javax.swing.JTextField GeneroL2;
     private javax.swing.JTextField GeneroL3;

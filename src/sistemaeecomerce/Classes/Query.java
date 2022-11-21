@@ -807,4 +807,29 @@ public class Query {
     public ArrayList<String> ConsultarCep(String cep) {
         return pvConsultarCep(cep);
     }
+    
+        private void pvInserirVenda (String id, String idUser, String idCart, String idBook, double value) {
+        //1: Definir o comando SQL
+            String sql = "INSERT INTO venda(id, idUser, idCart, idBook, value) VALUES (?, ?, ?, ?, ?)";
+            //2: Abrir uma conexão
+            MySQL factory = new MySQL();
+            try (Connection c = factory.obtemConexao()) {
+                //3: Pré compila o comando
+                PreparedStatement ps = c.prepareStatement(sql);
+                //4: Preenche os dados faltantes
+                ps.setString(1, id);
+                ps.setString(2, idUser);
+                ps.setString(3, idCart);
+                ps.setString(4, idBook);
+                ps.setDouble(5, value);
+                //5: Executa o comando
+                ps.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+    
+    public void InserirVenda (String id, String idUser, String idCart, String idBook, double value) {
+        pvInserirVenda(id, idUser, idCart, idBook, value);
+    }
 }

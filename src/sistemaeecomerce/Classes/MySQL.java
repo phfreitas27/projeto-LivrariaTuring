@@ -12,11 +12,11 @@ import java.sql.DriverManager;
  * @author 821223900
  */
 public class MySQL {
-    private String usuario = "Mm9vZV2ljr";
-    private String senha = "MKLGhqNlMp";
-    private String host = "remotemysql.com";
+    private String usuario = "root";
+    private String senha = "anima123";
+    private String host = "localhost";
     private String porta = "3306";
-    private String bd = "Mm9vZV2ljr";
+    private String bd = "biblioteca2";
     public Connection obtemConexao (){
         try{
             Connection c = DriverManager.getConnection(

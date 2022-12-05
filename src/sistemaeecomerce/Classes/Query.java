@@ -5,10 +5,12 @@
  */
 package sistemaeecomerce.Classes;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -977,5 +979,13 @@ public class Query {
     
     public int ConsultarQuantidadeVendas() {
         return pvConsultarQuantidadeVendas();
+    }
+    
+    public void Inseriricone(JFrame frm){
+        try{
+            frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/sistemaeecomerce/Imagens/livrosbarra.png"));
+        } catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
 }

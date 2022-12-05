@@ -4,11 +4,13 @@
  */
 package sistemaeecomerce;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Livro;
+import sistemaeecomerce.Classes.Query;
 
 /**
  *
@@ -84,7 +86,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
         javax.swing.JTextField[] generos = {GeneroL1, GeneroL2, GeneroL3, GeneroL4, GeneroL5, GeneroL6, GeneroL7, GeneroL8};
         javax.swing.JSpinner[] quantidades = {QuantidadeL1, QuantidadeL2, QuantidadeL3, QuantidadeL4, QuantidadeL5, QuantidadeL6, QuantidadeL7, QuantidadeL8};
         Carrinho c = new Carrinho();
-        
+        LivrosNome.clear();
         c.setId(Id);
         c.AtualizarValor();
         
@@ -175,6 +177,12 @@ public class CarrinhoTela extends javax.swing.JFrame {
         Carrinho c = new Carrinho();
         c.RemCarrinho(IdLivro, Id);
         atualizar();
+        /*for (int i = 0; i < LivrosNome.size(); i++) {
+            if(LivrosNome.get(i).equals(nome)) {
+                LivrosNome.remove(i);
+            }
+        }
+        */
         JOptionPane.showMessageDialog(null, "Livro removido do carrinho!");
     }
     
@@ -182,7 +190,12 @@ public class CarrinhoTela extends javax.swing.JFrame {
      * Creates new form Carrinho
      */
     public CarrinhoTela() {
+        super("Carrinho");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
+        getContentPane().setBackground(Color.white);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -348,6 +361,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
 
         jLabel60.setText("Quantidade:");
 
+        QuantidadeL1.setEnabled(false);
+
         javax.swing.GroupLayout L1Layout = new javax.swing.GroupLayout(L1);
         L1.setLayout(L1Layout);
         L1Layout.setHorizontalGroup(
@@ -445,6 +460,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
         GeneroL2.setEditable(false);
 
         jLabel61.setText("Quantidade:");
+
+        QuantidadeL2.setEnabled(false);
 
         javax.swing.GroupLayout L2Layout = new javax.swing.GroupLayout(L2);
         L2.setLayout(L2Layout);
@@ -544,6 +561,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
 
         jLabel62.setText("Quantidade:");
 
+        QuantidadeL3.setEnabled(false);
+
         javax.swing.GroupLayout L3Layout = new javax.swing.GroupLayout(L3);
         L3.setLayout(L3Layout);
         L3Layout.setHorizontalGroup(
@@ -641,6 +660,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
         GeneroL4.setEditable(false);
 
         jLabel63.setText("Quantidade:");
+
+        QuantidadeL4.setEnabled(false);
 
         javax.swing.GroupLayout L4Layout = new javax.swing.GroupLayout(L4);
         L4.setLayout(L4Layout);
@@ -740,6 +761,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
 
         jLabel64.setText("Quantidade:");
 
+        QuantidadeL5.setEnabled(false);
+
         javax.swing.GroupLayout L5Layout = new javax.swing.GroupLayout(L5);
         L5.setLayout(L5Layout);
         L5Layout.setHorizontalGroup(
@@ -812,6 +835,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
         jPanel1.add(L5, gridBagConstraints);
 
         L6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        L6.setEnabled(false);
 
         TituloL6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TituloL6.setText("Titulo");
@@ -840,6 +864,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
         GeneroL6.setEditable(false);
 
         jLabel65.setText("Quantidade:");
+
+        QuantidadeL6.setEnabled(false);
 
         javax.swing.GroupLayout L6Layout = new javax.swing.GroupLayout(L6);
         L6.setLayout(L6Layout);
@@ -942,6 +968,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
 
         jLabel66.setText("Quantidade:");
 
+        QuantidadeL7.setEnabled(false);
+
         javax.swing.GroupLayout L7Layout = new javax.swing.GroupLayout(L7);
         L7.setLayout(L7Layout);
         L7Layout.setHorizontalGroup(
@@ -1042,6 +1070,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
         GeneroL8.setEditable(false);
 
         jLabel67.setText("Quantidade:");
+
+        QuantidadeL8.setEnabled(false);
 
         javax.swing.GroupLayout L8Layout = new javax.swing.GroupLayout(L8);
         L8.setLayout(L8Layout);
@@ -1157,7 +1187,7 @@ public class CarrinhoTela extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(FinalizarCompra))
                 .addContainerGap())
@@ -1211,8 +1241,8 @@ public class CarrinhoTela extends javax.swing.JFrame {
         FinalizarCompra f = new FinalizarCompra();
         f.setIds(this.Id, this.IdUsuario);
         f.setValor(this.ValorTotal.getText());
-        f.setVisible(true);
         f.setLivros(LivrosNome);
+        f.setVisible(true);
         dispose();
     }//GEN-LAST:event_FinalizarCompraActionPerformed
 

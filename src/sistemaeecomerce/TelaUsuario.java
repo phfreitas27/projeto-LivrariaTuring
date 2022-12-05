@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import sistemaeecomerce.Classes.MySQL;
+import sistemaeecomerce.Classes.Query;
 import sistemaeecomerce.Usuario;
 /**
  *
@@ -22,7 +23,10 @@ public class TelaUsuario extends javax.swing.JFrame {
     ResultSet rs = null;
     
     public TelaUsuario() {
+        super("Meu cadastro");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
     }

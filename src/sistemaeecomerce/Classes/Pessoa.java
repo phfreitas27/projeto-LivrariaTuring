@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashSet;
+import javax.swing.JOptionPane;
 import sistemaeecomerce.Classes.MySQL;
 
 public class Pessoa {
@@ -58,8 +59,9 @@ public class Pessoa {
 
     public void inserir(String cep, String rua, String complemento, String estado, String cidade) {
         if(loginExists(this.login)) {
-            System.out.println("Já existe um usuário com este login");
+            JOptionPane.showMessageDialog(null,"Já existe um usuário com este login, escolha outro!", "Atenção!",JOptionPane.INFORMATION_MESSAGE );
         } else {
+            JOptionPane.showMessageDialog(null, "Cadastro Concluído!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
             query.InserirUsuario(this.login, this.senha, this.email, this.nome, this.idade, cep, rua, complemento, estado, cidade);
         }
     }

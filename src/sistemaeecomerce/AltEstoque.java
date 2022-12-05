@@ -39,8 +39,10 @@ public class AltEstoque extends javax.swing.JFrame {
     }
     
     public AltEstoque() {
-        
+        super("Alterar Estoque");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
         

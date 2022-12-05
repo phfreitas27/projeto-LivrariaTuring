@@ -54,10 +54,10 @@
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" pref="463" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="FinalizarCompra" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="FinalizarCompra" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -246,6 +246,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL1">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -410,6 +413,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL2">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -574,6 +580,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL3">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -738,6 +747,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL4">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -902,6 +914,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL5">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -912,6 +927,7 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -1066,6 +1082,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL6">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -1230,6 +1249,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL7">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -1394,6 +1416,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="QuantidadeL8">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

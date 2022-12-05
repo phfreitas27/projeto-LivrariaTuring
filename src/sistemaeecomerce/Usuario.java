@@ -65,7 +65,10 @@ public class Usuario extends javax.swing.JFrame {
      * Creates new form Usuario
      */
     public Usuario() {
+        super("Catálogo");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
         

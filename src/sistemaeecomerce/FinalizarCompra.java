@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.swing.JOptionPane;
 import sistemaeecomerce.Classes.Carrinho;
 import sistemaeecomerce.Classes.Cliente;
+import sistemaeecomerce.Classes.Query;
 
 /**
  *
@@ -52,7 +53,10 @@ public class FinalizarCompra extends javax.swing.JFrame {
      * Creates new form FinalizarCompra
      */
     public FinalizarCompra() {
+        super("Finalizar Compra");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
     }
@@ -231,7 +235,7 @@ public class FinalizarCompra extends javax.swing.JFrame {
         c.setId(this.idCarrinho);
         c.verDetalhes(this.idCarrinho);
         c.ProsseguirCompra(this.idCompra, this.idUsuario);
-        JOptionPane.showMessageDialog(null, "Pedido pago com sucesso!");
+        JOptionPane.showMessageDialog(null, "Pedido pago com sucesso!", "Compra Finalizada!",JOptionPane.INFORMATION_MESSAGE);
         Usuario u = new Usuario();
         u.setIdUsuario(this.idUsuario);
         u.setVisible(true);

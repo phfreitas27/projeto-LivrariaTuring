@@ -20,7 +20,10 @@ public class RelatorioVendas extends javax.swing.JFrame {
      * Creates new form RelatorioVendas
      */
     public RelatorioVendas() {
+        super("Relatorio de Vendas");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
         

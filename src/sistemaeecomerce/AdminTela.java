@@ -5,6 +5,7 @@
 package sistemaeecomerce;
 
 import java.awt.Color;
+import sistemaeecomerce.Classes.Query;
 
 /**
  *
@@ -16,7 +17,10 @@ public class AdminTela extends javax.swing.JFrame {
      * Creates new form Admin
      */
     public AdminTela() {
+        super("Tela Admin");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
     }

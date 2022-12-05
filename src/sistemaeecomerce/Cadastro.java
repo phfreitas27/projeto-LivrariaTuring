@@ -8,6 +8,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import sistemaeecomerce.Classes.Endereco;
 import sistemaeecomerce.Classes.Pessoa;
+import sistemaeecomerce.Classes.Query;
 
 /**
  *
@@ -19,7 +20,10 @@ public class Cadastro extends javax.swing.JFrame {
      * Creates new form Cadastro
      */
     public Cadastro() {
+        super("Cadastro");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
     }
@@ -275,12 +279,11 @@ public class Cadastro extends javax.swing.JFrame {
         
         p.inserir(this.cep.getText(), this.rua.getText(), this.complemento.getText(), this.estado.getSelectedItem().toString(), this.cidade.getText());
         
-        JOptionPane.showMessageDialog(null, "Cadastro Concluído!");
-        System.out.println("Nome: " + n);
-        System.out.println("Idade: " + i);
-        System.out.println("Email: " + e);
-        System.out.println("Login: " + l);
-        System.out.println("Senha: " + s);
+        //System.out.println("Nome: " + n);
+        //System.out.println("Idade: " + i);
+       // System.out.println("Email: " + e);
+        //System.out.println("Login: " + l);
+        //System.out.println("Senha: " + s);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

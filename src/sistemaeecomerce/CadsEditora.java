@@ -4,6 +4,7 @@
  */
 package sistemaeecomerce;
 
+import java.awt.Color;
 import sistemaeecomerce.Classes.Query;
 
 /**
@@ -16,7 +17,12 @@ public class CadsEditora extends javax.swing.JFrame {
      * Creates new form CadsEditora
      */
     public CadsEditora() {
+        super("Cadastro de editora");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
+        getContentPane().setBackground(Color.white);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -33,7 +39,7 @@ public class CadsEditora extends javax.swing.JFrame {
         Nome = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Editora");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro Editora"));

@@ -7,6 +7,7 @@ package sistemaeecomerce;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import sistemaeecomerce.Classes.Admin;
+import sistemaeecomerce.Classes.Query;
 
 /**
  *
@@ -18,8 +19,12 @@ public class RemoverAdm extends javax.swing.JFrame {
      * Creates new form RemoverAdm
      */
     public RemoverAdm() {
+        super("Remover Admin");
         initComponents();
+        Query qa = new Query();
+        qa.Inseriricone(this);
         getContentPane().setBackground(Color.white);
+        this.setLocationRelativeTo(null);
     }
 
     /**
